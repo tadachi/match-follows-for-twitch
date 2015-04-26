@@ -26,7 +26,9 @@
         <script src='cordova.js'></script> 
         <script src='xhr.js'></script>
         <!-- JQuery -->
-        <script src="js/jquery.min.js" type="text/javascript"></script>        
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <!-- Async -->
+        <script src="js/async.min.js" type="text/javascript"></script>
         <!-- Main Javascript Library -->
         <script src="js/main.js" type="text/javascript"></script>
         <script src="js/main2.js" type="text/javascript"></script>
@@ -39,7 +41,10 @@
         <div class="content">
             <label><input type="text" id="input1" placeholder="1st twitch username.."><span id="output1"></span></label>
             <label><input type="text" id="input2" placeholder="2nd twitch username.."><span id="output2"></span></label>
-            <label><button type="button" class="buttonalt">Test</button></label>
+            <label><button id="submit" type="button" class="buttonalt">Test</button></label>
+            <div id="result">
+            test
+            </div>
         </div>
     </body>
 </html>
