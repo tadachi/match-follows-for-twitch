@@ -1,4 +1,4 @@
-Blank HTML Template for Building Packaged Mobile Web Apps
+Match Follow for Twitch.
 =========================================================
 
 Copyright © 2012-2015, Intel Corporation. All rights reserved.
