@@ -20,6 +20,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
         <!-- CSS -->
         <link href="css/main.css" rel="stylesheet" type="text/css">
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
         
         <!-- Libraries required to use Emulation, Debugging features of IntelXDK -->
@@ -42,7 +43,7 @@
     <body>
         <div class="container-fluid"><!--Bootstrap full width container, spanning the entire width of your viewport.-->
             <div class="row masthead">
-                <div class="col-xs-9">
+                <div class="col-xs-10">
                     <br>
                     <br>
                     <br>
@@ -50,15 +51,18 @@
             </div>
 
             <div class="row form">
-                <div class="col-xs-9">
+                <div class="col-xs-10">
                     <label><input type="text" id="input0" placeholder="1st twitch username.."><span id="output0"></span></label>
                     <label><input type="text" id="input1" placeholder="2nd twitch username.."><span id="output1"></span></label>
                     <label><button id="submit" type="button" class="buttonalt">Test</button></label>                
                 </div>
             </div>
             <div class="row content">
-                <div id="scrollable_result" class="col-xs-9">
-                test
+                <div id="scrollable_result0" class="col-md-6">
+                    test
+                </div>
+                <div id="scrollable_result1" class="col-md-6">
+                    test
                 </div>
             </div>
         </div>

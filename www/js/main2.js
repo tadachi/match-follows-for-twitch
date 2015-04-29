@@ -133,6 +133,8 @@ function doneTyping(dom_id, name, opts) {
 
 /**
  * Does the legwork of verifying a user.
+ * Validates input boxes.
+ * Give an output dom to show the user it succeeded or failed.
  *
  * @param input_dom_id
  * @param output_dom_id
@@ -178,6 +180,9 @@ function verify(input_dom_id, output_dom_id, funcObj, doneTypingInterval, opts) 
 }
 
 /**
+ * Given an array of user names.
+ * Get a follows object for each one.
+ * Return them in an array through a callback.
  *
  * @param names
  * @param callback
@@ -205,50 +210,105 @@ function getEachUserFollows(names, callback) {
 }
 
 /**
- * Finds the follow matches for two people
- * Can also find the follows they don't share.
+ * Finds the follow matches for two people.
  *
  * @param input
  * @param opts
  * @returns {Array}
  */
-function matchFollowers(input, opts) {
+function findMatchFollowers(input) {
     // Followers and timestamp.
 //    for (i=0; i < input.follows.length; i++) {
 //        console.log(input.follows[i].channel.name + " " + input.follows[i].created_at);
 //    }
-    var inverse = false;
-    var matchFound = false;
-    // Set options if any.
-    if (opts["inverse"]) { inverse = opts["inverse"]; }
+    var name0;
     var name1;
-    var name2;
     
-    var result = [];
-    
+    result = [];
+
     // Works for 2.
     for (i = 0; i < input[0].follows.length; i++ ) {
-        matchFound = false; // Reset flag.
-        name1 = input[0].follows[i].channel.name;
+        name0 = input[0].follows[i].channel.name;
         for (x = 0; x < input[1].follows.length; x++) {
-            name2 = input[1].follows[x].channel.name;
+            name1 = input[1].follows[x].channel.name;
 
-            
-            if ( name1 === name2 ) {
-                matchFound = true;
-                if (!inverse) {
-                    result.push(input[0].follows[i].channel);
-                    break;
-                }
+            if ( name0 === name1 ) {
+                result.push(input[0].follows[i].channel);
+                break; // Break here to pass the rest of the follows because we found a match.
             }
         }
-        if (!matchFound && inverse) {
-            result.push(input[0].follows[i].channel);           
-        }
     }
-    console.log(result);
+    log(result, "orange");
     return result;
 }
+
+/**
+ * Finds the NOR product or follows that they do not share.
+ * @param input
+ * @param opts
+ * @returns {Array}
+ */
+function findNonMatchFollowers(input, opts) {
+    var name0;
+    var name1;
+
+    var result0 = [];
+    var result1 = [];
+    var finalResult = [];
+
+    var matchFound;
+
+    // Works for 2.
+    for (i = 0; i < input[0].follows.length; i++ ) {
+        matchFound = false;
+        name0 = input[0].follows[i].channel.name;
+        for (x = 0; x < input[1].follows.length; x++) {
+            name1 = input[1].follows[x].channel.name;
+
+            if ( name0 === name1 ) {
+                matchFound = true;
+                break; // Break here to pass the rest of the follows because we found a match.
+            }
+        }
+        if (!matchFound) {
+            result0.push(input[0].follows[i].channel);
+        }
+    }
+
+    // Works for 2.
+    for (i = 0; i < input[1].follows.length; i++ ) {
+        matchFound = false;
+        name1 = input[1].follows[i].channel.name;
+        for (x = 0; x < input[0].follows.length; x++) {
+            name0 = input[0].follows[x].channel.name;
+
+            if ( name0 === name1 ) {
+                matchFound = true;
+                break; // Break here to pass the rest of the follows because we found a match.
+            }
+        }
+        if (!matchFound) {
+            result1.push(input[1].follows[i].channel);
+        }
+    }
+
+    finalResult.push(result0);
+    finalResult.push(result1);
+
+    return finalResult;
+
+}
+
+/**
+ * Sorts a list of followers by name asc order.
+ *
+ * @param listOfFollows
+ * @returns {Array.<T>|*}
+ */
+function sortByName(listOfFollows) {
+    return listOfFollows.sort(function(a,b) { return a.name.localeCompare(b.name) } )
+}
+
 
 function processingNotificationImage(dom_id) {
     
@@ -282,8 +342,8 @@ function finalCheck(users) {
 }
 
 var users = [];
-users[0] = "kittyrawr";
-users[1] = "jackafur";
+users[0] = "jackafur";
+users[1] = "kittyrawr";
 
 // Semaphore for locking follow matching submission.
 var stillProcessing = false;
@@ -301,12 +361,12 @@ $( document ).ready(function() {
 //    $("#scrollable_result").empty();
 //    getEachUserFollows(users, function(result) {
 //        console.log(result); // [Object, Object]
-//        matchFollowers(result);
+//        findMatchFollowers(result);
 //        
 //        console.log(result);
-//        matchedFollows = matchFollowers(result).sort(); // Sorted.
-//        $("#scrollable_result").append("<p>" + matchedFollows.length + "</p>");
+//        matchedFollows = findMatchFollowers(result).sort(); // Sorted.
 //        for ( i = 0; i < matchedFollows.length; i++ ) {
+//        $("#scrollable_result").append("<p>" + matchedFollows.length + "</p>");
 //            $("#scrollable_result").append("<p>" + matchedFollows[i] + "</p>");
 //        }
 //        
@@ -326,21 +386,34 @@ $( document ).ready(function() {
         try {
             if (!finalCheck(users)) {
                 console.log(users);
-                $("#scrollable_result").html("<p>" + false + "</p>");
+                $("#scrollable_result0").html("<p>" + false + "</p>");
                 throw "There's a username that's not found.";
             }
             if (!stillProcessing) {
                 stillProcessing = true;
                 log(users, "orange");
                 getEachUserFollows(users, function(result) {
-                    $("#scrollable_result").empty(); 
+                    $("#scrollable_result0").empty();
+                    $("#scrollable_result1").empty();
                     console.log(result);
-                    matchedFollows = matchFollowers(result, {inverse : false}).sort(); // Sorted. //this.name, this.game, this.followers,
+                    //matchedFollows = findMatchFollowers(result).sort(); // Sorted. //this.name, this.game, this.followers,
+                    nonMatchedFollows = findNonMatchFollowers(result); // Sorted. //this.name, this.game, this.followers,
+                    sortedNomMatchedFollows = [sortByName(nonMatchedFollows[0]), sortByName(nonMatchedFollows[1])];
+
                     // Finished processing.
                     stillProcessing = false;
-                    $("#scrollable_result").append("<p>" + matchedFollows.length + "</p>");
-                    for ( i = 0; i < matchedFollows.length; i++ ) {
-                        $("#scrollable_result").append("<p>" + matchedFollows[i].name + "</p>");
+                    //$("#scrollable_result0").append("<p>" + matchedFollows.length + "</p>");
+                    //for ( i = 0; i < matchedFollows.length; i++ ) {
+                    //    $("#scrollable_result0").append("<p>" + matchedFollows[i].name + "</p>");
+                    //}
+
+                    $("#scrollable_result0").append("<p>" + sortedNomMatchedFollows[0].length + "</p>");
+                    for ( i = 0; i < sortedNomMatchedFollows[0].length; i++ ) {
+                        $("#scrollable_result0").append("<p>" + sortedNomMatchedFollows[0][i].name + "</p>");
+                    }
+                    $("#scrollable_result1").append("<p>" + sortedNomMatchedFollows[1].length + "</p>");
+                    for ( i = 0; i < sortedNomMatchedFollows[1].length; i++ ) {
+                        $("#scrollable_result1").append("<p>" + sortedNomMatchedFollows[1][i].name + "</p>");
                     }
                 });                
             } else {
