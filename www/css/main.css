@@ -3,22 +3,66 @@
     width: device-width;
 }
 
-html, body , div{
-	width:100%;
-	overflow-x:hidden;
-	font-family:Helvetica, Arial, sans-serif; 
-	-webkit-text-size-adjust:100%;
-    -webkit-user-select:none;
+html, body{
+    font-size: 0;
+    padding: 0;
+    margin: 0;
+
+	/*width:100%;*/
+	/*overflow-x:hidden;*/
+	/*font-family:Helvetica, Arial, sans-serif; */
+	/*-webkit-text-size-adjust:100%;*/
+    /*-webkit-user-select:none;*/
 
     /*Removes Bootstrap's whitespace on the right*/
-    width: auto !important;
-    overflow-x: hidden !important;
+    /*width: auto !important;*/
+    /*overflow-x: hidden !important;*/
 }
-
-
 
 * {
     outline: 0;
+}
+
+.vertical-center {
+    min-height: 100%;  /* Fallback for vh unit */
+    min-height: 100vh; /* You might also want to use
+                        'height' property instead.
+
+                        Note that for percentage values of
+                        'height' or 'min-height' properties,
+                        the 'height' of the parent element
+                        should be specified explicitly.
+
+                        In this case the parent of '.vertical-center'
+                        is the <body> element */
+
+    /* Make it a flex container */
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    /* Align the bootstrap's container vertically */
+    -webkit-box-align : center;
+    -webkit-align-items : center;
+    -moz-box-align : center;
+    -ms-flex-align : center;
+    align-items : center;
+
+    /* In legacy web browsers such as Firefox 9
+       we need to specify the width of the flex container */
+    width: 100%;
+
+    /* Also 'margin: 0 auto' doesn't have any effect on flex items in such web browsers
+       hence the bootstrap's container won't be aligned to the center anymore.
+
+       Therefore, we should use the following declarations to get it centered again */
+    -webkit-box-pack : center;
+    -moz-box-pack : center;
+    -ms-flex-pack : center;
+    -webkit-justify-content : center;
+    justify-content : center;
 }
 
 img { border:none; }
@@ -64,6 +108,16 @@ label {
 /*text-align: center;*/
 /*}*/
 
+/* Fix alignment issues with checkboxes and inline */
+.checkbox-inline.no_indent,
+.checkbox-inline.no_indent+.checkbox-inline.no_indent {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.checkbox-inline.no_indent:last-child {
+    margin-right: 0;
+}
+
 .logo {
     background-color:white;
     float:left;
@@ -77,7 +131,6 @@ label {
 }
 
 .content0 {
-    font-size: 40px;
     color: darkred;
 
     padding-top: 10px;
@@ -87,7 +140,6 @@ label {
 }
 
 .content1 {
-    font-size: 40px;
     color: darkred;
 
     padding-top: 10px;

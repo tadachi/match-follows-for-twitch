@@ -348,6 +348,65 @@ function finalCheck(users) {
     return true;
 }
 
+function updateNonMatching(dom_id0, dom_id1, list) {
+    var html = "";
+
+    // Reset the dom;
+    $(dom_id0).empty();
+    $(dom_id1).empty();
+
+    nonMatchedFollows = findNonMatchFollowers(list); // Sorted. //this.name, this.game, this.followers,
+    sortedNomMatchedFollows = [sortByName(nonMatchedFollows[0]), sortByName(nonMatchedFollows[1])];
+
+
+    $(dom_id0).append("<p>" + sortedNomMatchedFollows[0].length + "</p>");
+    for ( i = 0; i < sortedNomMatchedFollows[0].length; i++ ) {
+        $(dom_id0).append("<p>" + sortedNomMatchedFollows[0][i].name + "</p>");
+    }
+    $(dom_id1).append("<p>" + sortedNomMatchedFollows[1].length + "</p>");
+    for ( i = 0; i < sortedNomMatchedFollows[1].length; i++ ) {
+        $(dom_id0).append("<p>" + sortedNomMatchedFollows[1][i].name + "</p>");
+    }
+}
+
+function updateMatching(dom_id, table_id, list) {
+    var html = "";
+
+    // Reset the dom;
+    $(dom_id).empty();
+
+    // Our data.
+    var matchedFollows = findMatchFollowers(list).sort(); // Sorted. //this.name, this.game, this.followers,
+
+    // Build HTML table with data.
+    html += "<table id=\"{id}\" class=\"{classes}\">".format({id: table_id, classes: "table table-bordered tablesorter"});
+    html += "<p>" + matchedFollows.length + "</p>";
+    html += "<thead>";
+    html += "<tr>";
+    html += "<th>" + "Name" + "</th>";
+    html += "<th>" + "Stream URL" + "</th>";
+    html += "<th>" + "Follower Count" + "</th>";
+    html += "</tr>";
+    html += "</thead>";
+    html += "<tbody>";
+
+    for ( i = 0; i < matchedFollows.length; i++ ) {
+        html += "<tr>";
+        html += "<td>" + matchedFollows[i].name + "</td>";
+        html += "<td>" + "<a href=\"{value}\">{value}</a>".format({value: matchedFollows[i].url}) + "</td>";
+        html += "<td>" + matchedFollows[i].followers + "</td>";
+        html += "</tr>";
+    }
+    html += "</tbody>";
+    html += "</table>";
+
+    // Add the HTML.
+    $(dom_id).append(html);
+
+    // Apply table sort plugin to the table. You must do it after HTML is appended.
+    $("#"+table_id).tablesorter();
+}
+
 var users = [];
 users[0] = "jackafur";
 users[1] = "kittyrawr";
@@ -389,39 +448,21 @@ $( document ).ready(function() {
 
     // Event Handlers, Button clicks, etc.
     $("#submit").click(function() {
-
         // Erase to show the next.
         try {
             if (!finalCheck(users)) {
-                console.log(users);
-                $("#scrollable_result0").html("<p>" + false + "</p>");
                 throw "There's a username that's not found.";
             }
             if (!stillProcessing) {
                 stillProcessing = true;
                 log(users, "orange");
                 getEachUserFollows(users, function(result) {
-                    $("#scrollable_result0").empty();
-                    $("#scrollable_result1").empty();
-                    console.log(result);
-                    //matchedFollows = findMatchFollowers(result).sort(); // Sorted. //this.name, this.game, this.followers,
-                    nonMatchedFollows = findNonMatchFollowers(result); // Sorted. //this.name, this.game, this.followers,
-                    sortedNomMatchedFollows = [sortByName(nonMatchedFollows[0]), sortByName(nonMatchedFollows[1])];
 
-                    // Finished processing.
-                    stillProcessing = false;
-                    //$("#scrollable_result0").append("<p>" + matchedFollows.length + "</p>");
-                    //for ( i = 0; i < matchedFollows.length; i++ ) {
-                    //    $("#scrollable_result0").append("<p>" + matchedFollows[i].name + "</p>");
-                    //}
+                    if ($("#checkbox0").is(':checked')) {
+                        updateNonMatching("#scrollable_result0", "#scrollable_result1", result);
+                    } else {
+                        updateMatching("#scrollable_result0", "table0", result)
 
-                    $("#scrollable_result0").append("<p>" + sortedNomMatchedFollows[0].length + "</p>");
-                    for ( i = 0; i < sortedNomMatchedFollows[0].length; i++ ) {
-                        $("#scrollable_result0").append("<p>" + sortedNomMatchedFollows[0][i].name + "</p>");
-                    }
-                    $("#scrollable_result1").append("<p>" + sortedNomMatchedFollows[1].length + "</p>");
-                    for ( i = 0; i < sortedNomMatchedFollows[1].length; i++ ) {
-                        $("#scrollable_result1").append("<p>" + sortedNomMatchedFollows[1][i].name + "</p>");
                     }
                 });                
             } else {
@@ -431,7 +472,8 @@ $( document ).ready(function() {
         } catch (err) {
             log(err, "red");
         } finally {
-
+            // Finished processing.
+            stillProcessing = false;
         }
 
     });
