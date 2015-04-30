@@ -3,201 +3,91 @@
     width: device-width;
 }
 
-html { 
-	width:100%; height:100%;
+html, body , div{
+	width:100%;
 	overflow-x:hidden;
 	font-family:Helvetica, Arial, sans-serif; 
-	-webkit-text-size-adjust:100%; 
+	-webkit-text-size-adjust:100%;
+    -webkit-user-select:none;
+
+    /*Removes Bootstrap's whitespace on the right*/
+    width: auto !important;
+    overflow-x: hidden !important;
 }
 
-* { 
-	margin:0; padding:0; 
-	-webkit-box-sizing:border-box; box-sizing:border-box;
-	-webkit-tap-highlight-color:rgba(0,0,0,0);
-    -webkit-user-select:none;
-    -moz-user-select:none;
-        -ms-touch-action:none;
+
+
+* {
+    outline: 0;
 }
 
 img { border:none; }
-
-body {
-	width:100%;	height:100%;
-    overflow: auto;
-    -webkit-user-select:none;
-}
-
-input,textarea
-{
-    -webkit-user-select:text;
-    -moz-user-select:text;
-}
 
 ::selection { 
 	background:#aaa; 
 	color:#fff; 
 }
 
-a:focus, a:active, a:hover { outline:0; }
-
-.clear { clear:both; }
-.wrapper { float:left; }
-
 label {
     display: block;
-    margin: 0px;
+    margin-left: 7px;
+    margin-right: 7px;
 }
 
-/******************* SMARTPHONE [DEFAULT STYLES] **************************/
+.error {
+    border-color: red !important;
+}
+
+.valid {
+    border-color: lawngreen !important;
+}
+
+/******************* [DEFAULT STYLES] **************************/
+/*Removes Bootstrap's whitespace on the bottom of navbar.*/
+.navbar {
+    margin-bottom: 0 !important;
+    background-color: violet !important;
+}
+
+.navbar-default {
+    background-color: violet;
+}
+
 .logo {
     background-color:white;
     float:left;
     margin:10px;
 }
 
-.masthead {
-    display:block;
-    width: 100%;
-    height: 100%;
-    
-    background: rgb(0,175,174) url("../images/swoops.png") no-repeat;
-    background-position:bottom center;
-    -webkit-background-size:cover; 
-    -moz-background-size:cover; 
-    background-size:cover;
-}
-
 .form {
-    display:block;
-    width:100%; 
-    height:100%;
-    
-    background: rgb(0,100,174) url("../images/swoops.png") no-repeat;
-    background-position:bottom center;
-    -webkit-background-size:cover; 
-    -moz-background-size:cover; 
-    background-size:cover;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: purple;
 }
 
 .content {
-    display:block;
-    width:100%; 
-    height:100%;
-
     font-size: 40px;
     color: darkred;
 
-	background-image:-moz-linear-gradient(rgb(0,84,154) 1%,rgb(2,90,160) 16%,rgb(11,125,193) 100%); 
-	background-image:-webkit-gradient(linear,color-stop(0.01, rgb(0,84,154)),color-stop(0.16,  rgb(2,90,160)),color-stop(1, rgb(11,125,193)));
-	background-image:-webkit-linear-gradient(rgb(0,84,154) 1%,rgb(2,90,160) 16%,rgb(11,125,193) 100%);
-	background-image:-ms-linear-gradient(rgb(0,84,154) 1%,rgb(2,90,160) 16%,rgb(11,125,193) 100%);
-	background-image:linear-gradient(rgb(0,84,154) 1%,rgb(2,90,160) 16%,rgb(11,125,193) 100%);
-	background:rgb(0,84,154) url("../images/swoops.png") no-repeat;
-    background-position:bottom center;
-    -webkit-background-size:cover; 
-    -moz-background-size:cover; 
-    background-size:cover;
-}
+    padding-top: 10px;
+    padding-bottom: 10px;
 
-.button, #buttonone, #buttontwo {
-    background-color:#a6a8aB;
-    background-image:-moz-linear-gradient(top, #fff 0%, #a6a8aB 85%);
-    background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(85%,rgba(255,255,255,0)));
-    background-image:-webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 85%);
-    background-image:-ms-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0) 85%);
-    background-image:linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0)85%);
-	width:270px; height:62px;
-	border:1px solid white;
-	-moz-border-radius:8px;	
-    -webkit-border-radius:8px; 
-    border-radius:8px;
-	-moz-box-shadow:0px 1px 8px rgba(0,0,0,0.65); 
-    -webkit-box-shadow:0px 1px 8px rgba(0,0,0,0.65); 
-    box-shadow:0px 1px 8px rgba(0,0,0,0.65);
-	font-family:inherit;
-    font-size:36px;
-	line-height:62px;
-    text-align:center;
-	color:rgb(17,125,193);
-	cursor:pointer;
-	text-shadow:0 1px 0 white;
-    -moz-transition:all 0.2s ease; 
-    -webkit-transition:background-color 0.2s ease; 
-    transition:background-color 0.2s ease;
-}
-
-#buttonone {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -85px;
-    margin-left: -130px;
-}
-
-#buttonone.pressed {background-color:rgb(116, 117, 117); color:white; font-size: 50px; }
-#buttontwo.pressed { background-color:white; color:rgb(17,125,193); font-size: 40px;}
-
-.buttonsubmit {
-    width:530px; 
-    height:142px;
-    font-size:42px;
-
-    border-width:2px;
-    -moz-box-shadow:0px 1px 12px rgba(0,0,0,0.65);
-    -webkit-box-shadow:0px 1px 12px rgba(0,0,0,0.65);
-    box-shadow:0px 1px 12px rgba(0,0,0,0.65);
-    line-height:140px;
-    -moz-border-radius:16px; -webkit-border-radius:16px; border-radius:16px;
-    text-shadow:0 2px 0px rgb(255,255,255);
-}
-
-.buttonsubmit.pressed { 
-    background-color:white; 
-    color:rgb(17,125,193); 
-    font-size: 52px;
-}
-
-.buttonalt {
-    background: #3498db;
-    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-    background-image: -o-linear-gradient(top, #3498db, #2980b9);
-    background-image: linear-gradient(to bottom, #3498db, #2980b9);
-    -webkit-border-radius: 28;
-    -moz-border-radius: 28;
-    border-radius: 28px;
-    font-family: Arial;
-    color: #ffffff;
-    font-size: 20px;
-    padding: 10px 20px 10px 20px;
-    text-decoration: none;   
-}
-
-.buttonalt:hover {
-    background: #3cb0fd;
-    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-    text-decoration: none;
+    background-color: mediumpurple;
 }
 
 /************************ TABLET **************************/
 @media handheld,  screen and (min-width: 600px) and (min-height:640px), 
 only screen and (min-height: 440px) and (min-width:900px) {
 
-.masthead { height:75px; }
-
-.logo {
-    margin: 10px;   
 }
 
-.content { 
-    background: rgb(0,84,154) url("../images/swoops-lg.png") no-repeat;
-    background-position: bottom center;
-    -webkit-background-size: cover; 
-    -moz-background-size:cover; 
-    background-size:cover;
+/* Bootstrap Navbar */
+.navbar .navbar-nav {
+    display: inline-block;
+    float: none;
+    vertical-align: top;
+}
+
+.navbar .navbar-collapse {
+    text-align: center;
 }

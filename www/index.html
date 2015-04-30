@@ -21,7 +21,7 @@
         <!-- CSS -->
         <link href="css/main.css" rel="stylesheet" type="text/css">
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
         
         <!-- Libraries required to use Emulation, Debugging features of IntelXDK -->
         <!--Live Preview runs your app inside of a Chrome browser window on your desktop, it does not run on a real device. The files you see missing in the console log are indeed missing. They are supplied auto-magically when you use the Emulate, Test and Debug tabs and when you perform a build using the Build tab.-->
@@ -41,32 +41,54 @@
     </head>
     
     <body>
-        <div class="container-fluid"><!--Bootstrap full width container, spanning the entire width of your viewport.-->
-            <div class="row masthead">
-                <div class="col-xs-10">
-                    <br>
-                    <br>
-                    <br>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid col-md-6 col-md-offset-3">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Match Follows for Twitch</a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="nav navbar-nav">
+                        <li><a class="navbar-brand" href='#'>Test0</a></li>
+                        <li><a class="navbar-brand" href='#'>Test1</a></li>
+                        <li><a class="navbar-brand" href='#'>Test2</a></li>
+                        <li><a class="navbar-brand" href='#'>Test3</a></li>
+                        <li><a class="navbar-brand" href='#'>Test4</a></li>
+                    </ul>
                 </div>
             </div>
+        </nav><!-- /.navbar-collapse -->
 
-            <div class="row form">
-                <div class="col-xs-10">
-                    <label><input type="text" id="input0" placeholder="1st twitch username.."><span id="output0"></span></label>
-                    <label><input type="text" id="input1" placeholder="2nd twitch username.."><span id="output1"></span></label>
-                    <label><button id="submit" type="button" class="buttonalt">Test</button></label>                
-                </div>
+        <div class="container"><!--Bootstrap full width container, spanning the entire width of your viewport.-->
+            <div class="row form ">
+                    <form class="form-inline col-md-6 col-md-offset-3">
+                        <div class="form-group">
+                            <input class="form-control" id="input0" type="text" id="input0" placeholder="1st twitch username..">
+                            <label for="input0"><span id="output0"></span></label>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" id="input1" type="text" id="input1" placeholder="2nd twitch username..">
+                            <label for="input1"><span id="output1"></span></label>
+                        </div>
+                        <div class="form-group">
+                            <label><button id="submit" type="button" class="buttonalt">Test</button>
+                        </div>
+                    </form>
             </div>
             <div class="row content">
-                <div id="scrollable_result0" class="col-md-6">
+                <div id="scrollable_result0" class="col-md-6 col-md-offset-3">
                     test
                 </div>
-                <div id="scrollable_result1" class="col-md-6">
+                <div id="scrollable_result1" class="col-md-6 col-md-offset-3">
                     test
                 </div>
             </div>
-        </div>
-        
-    
+        </div><!-- /.container-fluid -->
     </body>
 </html>

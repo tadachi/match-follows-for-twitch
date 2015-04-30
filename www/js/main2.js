@@ -113,16 +113,17 @@ function doneTyping(dom_id, name, opts) {
     var id = null;
     
     // Progress or checking.
-    $(dom_id).text("checking..");
+    //$(dom_id).text("checking..");
     userExists(name, function(result) {
         if (result) { // Success.
-            $(dom_id).text("found.");
+            //$(dom_id).text("found");
+            $(dom_id).addClass("valid");
             if (opts["users"] && opts["id"]) {
                 // We can proceed since a user with that username is found.
                 opts["users"][opts["id"]] = name;
             }
         } else {
-            $(dom_id).text("not found.");
+            $(dom_id).addClass("error");
             if (opts["users"] && opts["id"]) {
                 // Set it to null so that other functions know not to proceed.
                 opts["users"][opts["id"]] = null;
@@ -130,6 +131,8 @@ function doneTyping(dom_id, name, opts) {
         }
     });
 }
+
+
 
 /**
  * Does the legwork of verifying a user.
@@ -162,10 +165,14 @@ function verify(input_dom_id, output_dom_id, funcObj, doneTypingInterval, opts) 
         
         clearTimeout(typingTimer);
         $(output_dom_id).empty();
-        // If input is empty just set text to an empty string.
+        $(output_dom_id).removeClass("error");
+        $(output_dom_id).removeClass("valid");
+        // If input is empty just set text to an empty string or remove classes.
         if( $(input_dom_id).val().length <= 1 ) { // Account for an empty character.
             if (opts["users"] && opts["id"]) { opts["users"][opts["id"]] = null; }
             $(output_dom_id).empty();
+            $(output_dom_id).removeClass("error");
+            $(output_dom_id).removeClass("valid");
         }// else still checking so..
     });
     
@@ -377,8 +384,8 @@ $( document ).ready(function() {
 //    });
     
     // function(){func(args)} syntax to prevent executing function after passing it in as an argument
-    verify("#input0", "#output0", function(){doneTyping("#output0", $("#input0").val(), {"users":users, "id":"0"})}, 400, {"users":users, "id":"0"});
-    verify("#input1", "#output1", function(){doneTyping("#output1", $("#input1").val(), {"users":users, "id":"1"})}, 400, {"users":users, "id":"1"});
+    verify("#input0", "#input0", function(){doneTyping("#input0", $("#input0").val(), {"users":users, "id":"0"})}, 400, {"users":users, "id":"0"});
+    verify("#input1", "#input1", function(){doneTyping("#input1", $("#input1").val(), {"users":users, "id":"1"})}, 400, {"users":users, "id":"1"});
 
     // Event Handlers, Button clicks, etc.
     $("#submit").click(function() {
