@@ -389,6 +389,7 @@ $( document ).ready(function() {
 
     // Event Handlers, Button clicks, etc.
     $("#submit").click(function() {
+
         // Erase to show the next.
         try {
             if (!finalCheck(users)) {

@@ -42,50 +42,55 @@
     
     <body>
         <nav class="navbar navbar-default" role="navigation">
-            <div class="container-fluid col-md-6 col-md-offset-3">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Match Follows for Twitch</a>
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+            <!--<div class="container-fluid col-md-6 col-md-offset-3">-->
+                <!--<div class="navbar-header">-->
+                    <!--<a class="navbar-brand" href="#">Match Follows for Twitch</a>-->
+                    <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">-->
+                        <!--<span class="sr-only">Toggle navigation</span>-->
+                        <!--<span class="icon-bar"></span>-->
+                        <!--<span class="icon-bar"></span>-->
+                        <!--<span class="icon-bar"></span>-->
+                    <!--</button>-->
 
-                </div>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="nav navbar-nav">
-                        <li><a class="navbar-brand" href='#'>Test0</a></li>
-                        <li><a class="navbar-brand" href='#'>Test1</a></li>
-                        <li><a class="navbar-brand" href='#'>Test2</a></li>
-                        <li><a class="navbar-brand" href='#'>Test3</a></li>
-                        <li><a class="navbar-brand" href='#'>Test4</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav><!-- /.navbar-collapse -->
+                <!--</div>-->
+                <!--<div class="collapse navbar-collapse" id="navbarCollapse">-->
+                    <!--<ul class="nav navbar-nav">-->
+                        <!--<li><a class="navbar-brand" href='#'>Test0</a></li>-->
+                        <!--<li><a class="navbar-brand" href='#'>Test1</a></li>-->
+                        <!--<li><a class="navbar-brand" href='#'>Test2</a></li>-->
+                        <!--<li><a class="navbar-brand" href='#'>Test3</a></li>-->
+                        <!--<li><a class="navbar-brand" href='#'>Test4</a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</nav>&lt;!&ndash; /.navbar-collapse &ndash;&gt;-->
 
-        <div class="container"><!--Bootstrap full width container, spanning the entire width of your viewport.-->
-            <div class="row form ">
-                    <form class="form-inline col-md-6 col-md-offset-3">
+        <div class="container-fluid"><!--Bootstrap full width container, spanning the entire width of your viewport.-->
+            <div class="row form">
+                <div class="col-xs-3 col-xs-offset-3">
+                    <form class="form-inline">
                         <div class="form-group">
-                            <input class="form-control" id="input0" type="text" id="input0" placeholder="1st twitch username..">
+                            <label for="input0">1st</label>
+                            <input class="form-control" id="input0" type="text" placeholder="cosmowright">
                             <label for="input0"><span id="output0"></span></label>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" id="input1" type="text" id="input1" placeholder="2nd twitch username..">
+                            <label for="input0">2nd</label>
+                            <input class="form-control" id="input1" type="text" placeholder="trihex">
                             <label for="input1"><span id="output1"></span></label>
                         </div>
-                        <div class="form-group">
-                            <label><button id="submit" type="button" class="buttonalt">Test</button>
-                        </div>
+                        <button id="submit" type="button" class="btn btn-default">Submit</button>
                     </form>
+                </div>
             </div>
-            <div class="row content">
-                <div id="scrollable_result0" class="col-md-6 col-md-offset-3">
+            <div class="row content1">
+                <div id="scrollable_result0" class="col-xs-offset-3 col-xs-6 col-xs-offset-3">
                     test
                 </div>
-                <div id="scrollable_result1" class="col-md-6 col-md-offset-3">
+
+            </div>
+            <div class="row content0">
+                <div id="scrollable_result1" class="col-xs-offset-3 col-xs-6 col-xs-offset-3">
                     test
                 </div>
             </div>

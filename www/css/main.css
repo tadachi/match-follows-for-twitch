@@ -44,14 +44,25 @@ label {
 
 /******************* [DEFAULT STYLES] **************************/
 /*Removes Bootstrap's whitespace on the bottom of navbar.*/
-.navbar {
-    margin-bottom: 0 !important;
-    background-color: violet !important;
-}
+/*.navbar {*/
+    /*margin-bottom: 0 !important;*/
+    /*background-color: violet !important;*/
+/*}*/
 
-.navbar-default {
-    background-color: violet;
-}
+/*.navbar-default {*/
+    /*background-color: violet;*/
+/*}*/
+
+/* Bootstrap Navbar */
+/*.navbar .navbar-nav {*/
+/*display: inline-block;*/
+/*float: none;*/
+/*vertical-align: top;*/
+/*}*/
+
+/*.navbar .navbar-collapse {*/
+/*text-align: center;*/
+/*}*/
 
 .logo {
     background-color:white;
@@ -62,17 +73,27 @@ label {
 .form {
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: purple;
+    background-color: #9d9d9d;
 }
 
-.content {
+.content0 {
     font-size: 40px;
     color: darkred;
 
     padding-top: 10px;
     padding-bottom: 10px;
 
-    background-color: mediumpurple;
+    background-color: lightgray;
+}
+
+.content1 {
+    font-size: 40px;
+    color: darkred;
+
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    background-color: lightsteelblue;
 }
 
 /************************ TABLET **************************/
@@ -81,13 +102,3 @@ only screen and (min-height: 440px) and (min-width:900px) {
 
 }
 
-/* Bootstrap Navbar */
-.navbar .navbar-nav {
-    display: inline-block;
-    float: none;
-    vertical-align: top;
-}
-
-.navbar .navbar-collapse {
-    text-align: center;
-}
