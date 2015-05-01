@@ -379,26 +379,34 @@ function updateMatching(dom_id, table_id, list) {
     var matchedFollows = findMatchFollowers(list).sort(); // Sorted. //this.name, this.game, this.followers,
 
     // Build HTML table with data.
-    html += "<table id=\"{id}\" class=\"{classes}\">".format({id: table_id, classes: "table table-bordered tablesorter"});
+    html += "<div class=\"table-responsive\">";
+
+    html += "<table id=\"{id}\" class=\"{classes}\">".format({id: table_id, classes: "table table-striped table-curved table-hover table-bordered table-condensed text-center tablesorter"});
     html += "<p>" + matchedFollows.length + "</p>";
     html += "<thead>";
     html += "<tr>";
-    html += "<th>" + "Name" + "</th>";
-    html += "<th>" + "Stream URL" + "</th>";
-    html += "<th>" + "Follower Count" + "</th>";
+    html += "<th class=\"text-center\">" + "Logo" + "</th>"
+    html += "<th class=\"text-center\">" + "Name" + "</th>";
+    //html += "<th>" + "Stream URL" + "</th>";
+    //html += "<th class=\"text-center\">" + "Last Game Played" + "</th>";
+    html += "<th class=\"text-center\">" + "Follows"+ "</th>";
     html += "</tr>";
     html += "</thead>";
     html += "<tbody>";
 
     for ( i = 0; i < matchedFollows.length; i++ ) {
         html += "<tr>";
-        html += "<td>" + matchedFollows[i].name + "</td>";
-        html += "<td>" + "<a href=\"{value}\">{value}</a>".format({value: matchedFollows[i].url}) + "</td>";
+        html += "<td>" + "<img class=\"{class}\" height=\"32\" width=\"32\" src=\"{src}\"".format({src: matchedFollows[i].logo, class: "img-responsive"}) + "</td>";
+        html += "<td>" + "<a href=\"{url}\">{value}</a>".format({url: matchedFollows[i].url, value: matchedFollows[i].name}) + "</td>";
+        //html += "<td>" + matchedFollows[i].game + "</td>";
+        //html += "<td>" + "<a href=\"{value}\">{value}</a>".format({value: matchedFollows[i].url}) + "</td>";
         html += "<td>" + matchedFollows[i].followers + "</td>";
         html += "</tr>";
     }
     html += "</tbody>";
     html += "</table>";
+
+    html += "</div>";
 
     // Add the HTML.
     $(dom_id).append(html);
