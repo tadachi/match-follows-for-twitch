@@ -23,8 +23,6 @@ html, body{
     outline: 0;
 }
 
-
-
 img { border:none; }
 
 ::selection { 
@@ -46,6 +44,14 @@ label {
     border-color: lawngreen !important;
 }
 
+.table tbody>tr>td.vert-align{
+    vertical-align: middle;
+}
+
+.page-wrapper {
+    /*width: 320px; *//* Your page width */
+    margin: 0 auto; /* To center your page within the body */
+}
 
 /******************* [DEFAULT STYLES] **************************/
 .container .jumbotron {
@@ -62,38 +68,66 @@ label {
     margin-right: 0;
 }
 
+.to-center {
+    margin: 0 auto;
+}
+
+.img-border {
+    border: 2px solid rgba(0, 0, 0, 0.66);
+}
+
 .form {
     padding-top: 10px;
     padding-bottom: 10px;
+
     border-radius: 20px;
     background-color: #d5d3d0;
 }
 
-.content0 {
+.content {
     color: black;
-
     text-align:center;
+
+    font-size: 14px;
 
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 20px;
+
+    displaye: none;
 
     background-color: #f2f2f2;
 }
 
 #scrollable_result0 {
-    width:75%;
-    margin:auto;
+    width: 95%;
+    margin: auto;
+    display: none; /* By default hide this */
 }
 
 #scrollable_result1 {
-      width:75%;
+      width:95%;
       margin:auto;
+      display: none; /* By default hide this */
+}
+
+.popbox {
+    display: none;
+    position: absolute;
+    z-index: 99999;
+    width: 400px;
+    padding: 10px;
+    background: #EEEFEB;
+    color: #000000;
+    border: 1px solid #4D4F53;
+    margin: 0px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(164, 164, 164, 1);
+    box-shadow: 0px 0px 5px 0px rgba(164, 164, 164, 1);
 }
 
 /************************ TABLET **************************/
-@media handheld,  screen and (min-width: 600px) and (min-height:640px), 
-only screen and (min-height: 440px) and (min-width:900px) {
+/*@media handheld,  screen and (min-width: 600px) and (min-height:640px), */
+/*only screen and (min-height: 440px) and (min-width:900px) {*/
 
-}
+/*}*/
 

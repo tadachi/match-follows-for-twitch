@@ -303,7 +303,6 @@ function findNonMatchFollowers(input, opts) {
     finalResult.push(result1);
 
     return finalResult;
-
 }
 
 /**
@@ -348,29 +347,33 @@ function finalCheck(users) {
     return true;
 }
 
-function updateNonMatching(dom_id0, dom_id1, list) {
-    var html = "";
+function updateNonMatching(dom_id0, dom_id1, table_id0, table_id1, list) {
+    var html0 = "";
+    var html1 = "";
 
     // Reset the dom;
     $(dom_id0).empty();
     $(dom_id1).empty();
 
+    // Our data.
     nonMatchedFollows = findNonMatchFollowers(list); // Sorted. //this.name, this.game, this.followers,
     sortedNomMatchedFollows = [sortByName(nonMatchedFollows[0]), sortByName(nonMatchedFollows[1])];
 
+    html0 = process(table_id0, sortedNomMatchedFollows[0]);
+    html1 = process(table_id1, sortedNomMatchedFollows[1]);
 
-    $(dom_id0).append("<p>" + sortedNomMatchedFollows[0].length + "</p>");
-    for ( i = 0; i < sortedNomMatchedFollows[0].length; i++ ) {
-        $(dom_id0).append("<p>" + sortedNomMatchedFollows[0][i].name + "</p>");
-    }
-    $(dom_id1).append("<p>" + sortedNomMatchedFollows[1].length + "</p>");
-    for ( i = 0; i < sortedNomMatchedFollows[1].length; i++ ) {
-        $(dom_id0).append("<p>" + sortedNomMatchedFollows[1][i].name + "</p>");
-    }
+    // Add the HTML.
+    $(dom_id0).append(html0).show('slow');;
+    $(dom_id1).append(html1).show('slow');;
+
+    // Apply table sort plugin to the table. You must do it after HTML is appended.
+    $(table_id0).tablesorter();
+    $(table_id1).tablesorter();
+
 }
 
 function updateMatching(dom_id, table_id, list) {
-    var html = "";
+    var html;
 
     // Reset the dom;
     $(dom_id).empty();
@@ -378,46 +381,82 @@ function updateMatching(dom_id, table_id, list) {
     // Our data.
     var matchedFollows = findMatchFollowers(list).sort(); // Sorted. //this.name, this.game, this.followers,
 
+    html = process(table_id, matchedFollows);
+
+    // Add the HTML.
+    $(dom_id).append(html).show('slow');
+
+    // Apply table sort plugin to the table. You must do it after HTML is appended.
+    $(table_id).tablesorter();
+}
+
+function process(table_id, list) {
+    var html = "";
+    var popbox_html = "";
+    table_id = table_id.replace("#","");
+
+
     // Build HTML table with data.
     html += "<div class=\"table-responsive\">";
-
-    html += "<table id=\"{id}\" class=\"{classes}\">".format({id: table_id, classes: "table table-striped table-curved table-hover table-bordered table-condensed text-center tablesorter"});
-    html += "<p>" + matchedFollows.length + "</p>";
+    html += "<table id=\"{id}\" class=\"{classes}\">".format({id: table_id, classes: "table table-striped table-curved table-hover table-bordered table-condensed tablesorter"});
     html += "<thead>";
     html += "<tr>";
     html += "<th class=\"text-center\">" + "Logo" + "</th>"
     html += "<th class=\"text-center\">" + "Name" + "</th>";
-    //html += "<th>" + "Stream URL" + "</th>";
     //html += "<th class=\"text-center\">" + "Last Game Played" + "</th>";
     html += "<th class=\"text-center\">" + "Follows"+ "</th>";
     html += "</tr>";
     html += "</thead>";
     html += "<tbody>";
 
-    for ( i = 0; i < matchedFollows.length; i++ ) {
-        html += "<tr>";
-        html += "<td>" + "<img class=\"{class}\" height=\"32\" width=\"32\" src=\"{src}\"".format({src: matchedFollows[i].logo, class: "img-responsive"}) + "</td>";
-        html += "<td>" + "<a href=\"{url}\">{value}</a>".format({url: matchedFollows[i].url, value: matchedFollows[i].name}) + "</td>";
-        //html += "<td>" + matchedFollows[i].game + "</td>";
-        //html += "<td>" + "<a href=\"{value}\">{value}</a>".format({value: matchedFollows[i].url}) + "</td>";
-        html += "<td>" + matchedFollows[i].followers + "</td>";
+    for ( i = 0; i < list.length; i++ ) {
+        popbox_html = "Test";
+
+        id = table_id + "-" + i;
+
+
+
+        html += "<tr id=\"{id}\">".format({id: id});
+        html += "<td class=\"vert-align\">" + "<img class=\"{class}\" height=\"50\" width=\"50\" src=\"{src}\"".format({src: list[i].logo, class: "img-responsive img-border to-center img-rounded"}) + "</td>";
+        html += "<td class=\"vert-align\">" + "<a href=\"{url}\">{value}</a>".format({url: list[i].url, value: list[i].name}) + "</td>";
+        //html += "<td class=\"vert-align\">" + list[i].game + "</td>";
+        html += "<td class=\"vert-align\">" + list[i].followers + "</td>";
         html += "</tr>";
+
+        $("#"+id).hover(function (e) {
+
+            var target = '#' + ($(this).attr('data-popbox'));
+            $(target).show();
+            moveLeft = $(this).outerWidth();
+            moveDown = ($(target).outerHeight() / 2);
+        }, function () {
+            var target = '#' + ($(this).attr('data-popbox'));
+            if (!($("a.popper").hasClass("show"))) {
+                $(target).hide();
+            }
+        });
     }
+
     html += "</tbody>";
     html += "</table>";
 
     html += "</div>";
 
-    // Add the HTML.
-    $(dom_id).append(html);
+    return html;
+}
 
-    // Apply table sort plugin to the table. You must do it after HTML is appended.
-    $("#"+table_id).tablesorter();
+function showLoadingImage(dom_id) {
+    var html = "<div id=\"loading-image\"><img src=\"path/to/loading.gif\" alt=\"Loading...\" /></div>"
+    $(dom_id).append(html);
+}
+
+function hideLoadingImage(dom_id) {
+    $(dom_id).remove();
 }
 
 var users = [];
-users[0] = "jackafur";
-users[1] = "kittyrawr";
+users[0] = "cosmowright";
+users[1] = "trihex";
 
 // Semaphore for locking follow matching submission.
 var stillProcessing = false;
@@ -426,29 +465,6 @@ var stillProcessing = false;
 $( document ).ready(function() {
     console.log( "Document is ready!" );
     opts = {"offset":0, "direction":"ASC", "limit":1000};
-
-    // Test.
-//    userExists("asdfasdasdfsafas", function(result) {
-//        console.log(result)
-//    });
-        
-//    $("#scrollable_result").empty();
-//    getEachUserFollows(users, function(result) {
-//        console.log(result); // [Object, Object]
-//        findMatchFollowers(result);
-//        
-//        console.log(result);
-//        matchedFollows = findMatchFollowers(result).sort(); // Sorted.
-//        for ( i = 0; i < matchedFollows.length; i++ ) {
-//        $("#scrollable_result").append("<p>" + matchedFollows.length + "</p>");
-//            $("#scrollable_result").append("<p>" + matchedFollows[i] + "</p>");
-//        }
-//        
-//    });
-    
-//    getAllFollowedStreams("serokichimpo", opts, function(result) {
-//        console.log(result);
-//    });
     
     // function(){func(args)} syntax to prevent executing function after passing it in as an argument
     verify("#input0", "#input0", function(){doneTyping("#input0", $("#input0").val(), {"users":users, "id":"0"})}, 400, {"users":users, "id":"0"});
@@ -465,16 +481,16 @@ $( document ).ready(function() {
                 stillProcessing = true;
                 log(users, "orange");
                 getEachUserFollows(users, function(result) {
+                    $("#scrollable_result0").empty();
+                    $("#scrollable_result1").empty();
 
                     if ($("#checkbox0").is(':checked')) {
-                        updateNonMatching("#scrollable_result0", "#scrollable_result1", result);
+                        updateNonMatching("#scrollable_result0", "#scrollable_result1", "#table0", "#table1", result);
                     } else {
-                        updateMatching("#scrollable_result0", "table0", result)
-
+                        updateMatching("#scrollable_result0", "#table0", result)
                     }
                 });                
             } else {
-                $("#scrollable_result").html("<p>" + false + "</p>");
                 throw "Cannot process request since there is already one in progress."
             }               
         } catch (err) {
@@ -483,7 +499,29 @@ $( document ).ready(function() {
             // Finished processing.
             stillProcessing = false;
         }
-
     });
-    
+
+    // Test.
+//    userExists("asdfasdasdfsafas", function(result) {
+//        console.log(result)
+//    });
+
+//    $("#scrollable_result").empty();
+//    getEachUserFollows(users, function(result) {
+//        console.log(result); // [Object, Object]
+//        findMatchFollowers(result);
+//
+//        console.log(result);
+//        matchedFollows = findMatchFollowers(result).sort(); // Sorted.
+//        for ( i = 0; i < matchedFollows.length; i++ ) {
+//        $("#scrollable_result").append("<p>" + matchedFollows.length + "</p>");
+//            $("#scrollable_result").append("<p>" + matchedFollows[i] + "</p>");
+//        }
+//
+//    });
+
+//    getAllFollowedStreams("serokichimpo", opts, function(result) {
+//        console.log(result);
+//    });
+
 });
