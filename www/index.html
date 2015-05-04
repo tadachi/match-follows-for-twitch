@@ -17,7 +17,7 @@
         </script>
         <title>Match Follows for Twitch</title>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
-        <!--<meta name="viewport" content="width=device-500, initial-scale=1">-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- CSS -->
         <link href="css/main.css" rel="stylesheet" type="text/css">
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -72,27 +72,29 @@
                     <div class="row form">
                         <form class="form-inline">
                             <div class="form-group">
-                                <label for="input0">1st</label>
+                                <label for="input0" class="red">1st</label>
                                 <input class="form-control" id="input0" type="text" placeholder="cosmowright">
                                 <label for="input0"><span id="output0"></span></label>
                             </div>
                             <div class="form-group">
-                                <label for="input0">2nd</label>
+                                <label for="input0" class="blue">2nd</label>
                                 <input class="form-control" id="input1" type="text" placeholder="trihex">
                                 <label for="input1"><span id="output1"></span></label>
                             </div>
                             <button id="submit" type="button" class="btn btn-default">Submit</button>
                                 <label class="checkbox-inline no_indent"><input id="checkbox0" type="checkbox">Inverse</label>
-
+                            <div id="test" class="popbox" style="display: none"><p>test</p></div>
                         </form>
+
                     </div>
+
                 </div><!-- /.jumbotron -->
                 <div class="jumbotron">
                     <div class="row content">
-                        <div id="scrollable_result0" style="display: none">
-                        </div>
-                        <div id="scrollable_result1" style="display: none">
-                        </div>
+                            <div id="scrollable_result0">
+                            </div>
+                            <div id="scrollable_result1">
+                            </div>
                     </div>
                 </div><!-- /.jumbotron -->
             </div><!-- /.container -->

@@ -347,7 +347,17 @@ function finalCheck(users) {
     return true;
 }
 
-function updateNonMatching(dom_id0, dom_id1, table_id0, table_id1, list) {
+/**
+ * Append a list of follows of the 1st person has that 2nd person doesn't have and vice versa.
+ *
+ * @param dom_id0
+ * @param dom_id1
+ * @param table_id0
+ * @param table_id1
+ * @param list
+ * @param opts
+ */
+function updateNonMatching(dom_id0, dom_id1, table_id0, table_id1, list, opts) {
     var html0 = "";
     var html1 = "";
 
@@ -359,8 +369,16 @@ function updateNonMatching(dom_id0, dom_id1, table_id0, table_id1, list) {
     nonMatchedFollows = findNonMatchFollowers(list); // Sorted. //this.name, this.game, this.followers,
     sortedNomMatchedFollows = [sortByName(nonMatchedFollows[0]), sortByName(nonMatchedFollows[1])];
 
-    html0 = process(table_id0, sortedNomMatchedFollows[0]);
-    html1 = process(table_id1, sortedNomMatchedFollows[1]);
+    if (opts["users"][0] && opts["users"][1]) {
+        user1 = "<span class=\"{class}\">{user2}</span>".format({user1: opts["users"][0], class: "red"})
+        user2 = "<span class=\"{class}\">{user2}</span>".format({user2: opts["users"][1], class: "blue"})
+        html0 += "<p>{user1} follows ({count}) that {user2} doesn't</p>".format({user1: user1, user2: user2, count: sortedNomMatchedFollows[0].length})
+        html1 += "<p>{user2} follows ({count}) that {user1} doesn't</p>".format({user1: user2, user2: user2, count: sortedNomMatchedFollows[1].length})
+    }
+
+
+    html0 += process(table_id0, sortedNomMatchedFollows[0]);
+    html1 += process(table_id1, sortedNomMatchedFollows[1]);
 
     // Add the HTML.
     $(dom_id0).append(html0).show('slow');;
@@ -372,8 +390,16 @@ function updateNonMatching(dom_id0, dom_id1, table_id0, table_id1, list) {
 
 }
 
-function updateMatching(dom_id, table_id, list) {
-    var html;
+/**
+ * Append a list of follows of the 1st person 2nd person share.
+ *
+ * @param dom_id
+ * @param table_id
+ * @param list
+ * @param opts
+ */
+function updateMatching(dom_id, table_id, list, opts) {
+    var html = "";
 
     // Reset the dom;
     $(dom_id).empty();
@@ -381,7 +407,23 @@ function updateMatching(dom_id, table_id, list) {
     // Our data.
     var matchedFollows = findMatchFollowers(list).sort(); // Sorted. //this.name, this.game, this.followers,
 
-    html = process(table_id, matchedFollows);
+    //console.log(matchedFollows.length);
+
+    // They share one or more follows.
+
+    user1 = "<span class=\"{class}\">{user1}</span>".format({user1: opts["users"][0], class: "red"})
+    user2 = "<span class=\"{class}\">{user2}</span>".format({user2: opts["users"][1], class: "blue"})
+    if (opts["users"][0] && opts["users"][1] && matchedFollows.length > 0) {
+        html += "<p>{user1} and {user2} share these follows ({count})</p>".format({user1: user1, user2: user2 , count: matchedFollows.length});
+        // Process
+        html += process(table_id, matchedFollows);
+    // They do not share follows.
+    } else if (opts["users"][0] && opts["users"][1] && matchedFollows.length <= 0) {
+        html += "<p>{user1} and {user2} do not share any follows ({count})</p>".format({user1: user1, user2: user2 , count: matchedFollows.length});
+    // Input wasn't validated properly.
+    } else {
+        html += "<p>Something went wrong</p>";
+    }
 
     // Add the HTML.
     $(dom_id).append(html).show('slow');
@@ -392,9 +434,8 @@ function updateMatching(dom_id, table_id, list) {
 
 function process(table_id, list) {
     var html = "";
-    var popbox_html = "";
-    table_id = table_id.replace("#","");
 
+    table_id = table_id.replace("#","");
 
     // Build HTML table with data.
     html += "<div class=\"table-responsive\">";
@@ -410,31 +451,16 @@ function process(table_id, list) {
     html += "<tbody>";
 
     for ( i = 0; i < list.length; i++ ) {
-        popbox_html = "Test";
-
         id = table_id + "-" + i;
 
-
-
-        html += "<tr id=\"{id}\">".format({id: id});
-        html += "<td class=\"vert-align\">" + "<img class=\"{class}\" height=\"50\" width=\"50\" src=\"{src}\"".format({src: list[i].logo, class: "img-responsive img-border to-center img-rounded"}) + "</td>";
+        html += "<tr id=\"{id}\" title=\"Last Played: {game}\">".format({id: id, game: list[i].game});
+        html += "<td class=\"vert-align\">" + "<img class=\"{class}\" height=\"50\" width=\"50\" src=\"{src}\" onerror=\"this.src='{default}'\""
+                    .format({src: list[i].logo, class: "img-responsive img-border to-center img-rounded",
+                    default: "http://s.jtvnw.net/jtv_user_pictures/hosted_images/GlitchIcon_WhiteonPurple.png"}) + "</td>";
         html += "<td class=\"vert-align\">" + "<a href=\"{url}\">{value}</a>".format({url: list[i].url, value: list[i].name}) + "</td>";
         //html += "<td class=\"vert-align\">" + list[i].game + "</td>";
         html += "<td class=\"vert-align\">" + list[i].followers + "</td>";
         html += "</tr>";
-
-        $("#"+id).hover(function (e) {
-
-            var target = '#' + ($(this).attr('data-popbox'));
-            $(target).show();
-            moveLeft = $(this).outerWidth();
-            moveDown = ($(target).outerHeight() / 2);
-        }, function () {
-            var target = '#' + ($(this).attr('data-popbox'));
-            if (!($("a.popper").hasClass("show"))) {
-                $(target).hide();
-            }
-        });
     }
 
     html += "</tbody>";
@@ -484,10 +510,12 @@ $( document ).ready(function() {
                     $("#scrollable_result0").empty();
                     $("#scrollable_result1").empty();
 
+                    opts = {users: users};
+
                     if ($("#checkbox0").is(':checked')) {
-                        updateNonMatching("#scrollable_result0", "#scrollable_result1", "#table0", "#table1", result);
+                        updateNonMatching("#scrollable_result0", "#scrollable_result1", "#table0", "#table1", result, opts);
                     } else {
-                        updateMatching("#scrollable_result0", "#table0", result)
+                        updateMatching("#scrollable_result0", "#table0", result, opts)
                     }
                 });                
             } else {
