@@ -61,7 +61,6 @@ function getAllFollowedStreams(name, opts, callback) {
         },
         error: function(streams) {
             log("The request could not be made.", "red");
-            console.log("The request could not be made.");
         }
     });
 }
@@ -87,7 +86,7 @@ function userExists(name, callback) {
             }
         },
         error: function(streams) {
-            console.log("The request could not be made.");
+            log("The request could not be made.", "red");
             callback(false) ; 
         }
     });
@@ -109,7 +108,7 @@ function userExists(name, callback) {
  * @param opts
  */
 function doneTyping(dom_id, name, opts) {
-    console.log(name);
+    log(name, "orange");
     var id = null;
     
     // Progress or checking.
@@ -265,7 +264,7 @@ function findNonMatchFollowers(input, opts) {
 
     var matchFound;
 
-    // Works for 2.
+    // Works for 2 people.
     for (i = 0; i < input[0].follows.length; i++ ) {
         matchFound = false;
         name0 = input[0].follows[i].channel.name;
@@ -282,7 +281,7 @@ function findNonMatchFollowers(input, opts) {
         }
     }
 
-    // Works for 2.
+    // Works for 2 people.
     for (i = 0; i < input[1].follows.length; i++ ) {
         matchFound = false;
         name1 = input[1].follows[i].channel.name;
@@ -313,23 +312,6 @@ function findNonMatchFollowers(input, opts) {
  */
 function sortByName(listOfFollows) {
     return listOfFollows.sort(function(a,b) { return a.name.localeCompare(b.name) } )
-}
-
-
-function processingNotificationImage(dom_id) {
-    
-}
-
-function finishedNotificationImage(dom_id) {
-    
-}
-
-function processingNotificationText(dom_id) {
-    
-}
-
-function finishedNotificationText(dom_id) {
-    
 }
 
 /**
@@ -370,10 +352,10 @@ function updateNonMatching(dom_id0, dom_id1, table_id0, table_id1, list, opts) {
     sortedNomMatchedFollows = [sortByName(nonMatchedFollows[0]), sortByName(nonMatchedFollows[1])];
 
     if (opts["users"][0] && opts["users"][1]) {
-        user1 = "<span class=\"{class}\">{user2}</span>".format({user1: opts["users"][0], class: "red"})
+        user1 = "<span class=\"{class}\">{user1}</span>".format({user1: opts["users"][0], class: "red"})
         user2 = "<span class=\"{class}\">{user2}</span>".format({user2: opts["users"][1], class: "blue"})
         html0 += "<p>{user1} follows ({count}) that {user2} doesn't</p>".format({user1: user1, user2: user2, count: sortedNomMatchedFollows[0].length})
-        html1 += "<p>{user2} follows ({count}) that {user1} doesn't</p>".format({user1: user2, user2: user2, count: sortedNomMatchedFollows[1].length})
+        html1 += "<p>{user2} follows ({count}) that {user1} doesn't</p>".format({user1: user1, user2: user2, count: sortedNomMatchedFollows[1].length})
     }
 
 
@@ -442,10 +424,10 @@ function process(table_id, list) {
     html += "<table id=\"{id}\" class=\"{classes}\">".format({id: table_id, classes: "table table-striped table-curved table-hover table-bordered table-condensed tablesorter"});
     html += "<thead>";
     html += "<tr>";
-    html += "<th class=\"text-center\">" + "Logo" + "</th>"
-    html += "<th class=\"text-center\">" + "Name" + "</th>";
+    html += "<th class=\"text-center cursor-pointer\">" + "Logo" + "</th>"
+    html += "<th class=\"text-center cursor-pointer\">" + "Name" + "</th>";
     //html += "<th class=\"text-center\">" + "Last Game Played" + "</th>";
-    html += "<th class=\"text-center\">" + "Follows"+ "</th>";
+    html += "<th class=\"text-center cursor-pointer\">" + "Follows"+ "</th>";
     html += "</tr>";
     html += "</thead>";
     html += "<tbody>";
@@ -480,11 +462,12 @@ function hideLoadingImage(dom_id) {
     $(dom_id).remove();
 }
 
+// Globals
 var users = [];
 users[0] = "cosmowright";
 users[1] = "trihex";
 
-// Semaphore for locking follow matching submission.
+// Semaphore for preventing more than one submission at at time.
 var stillProcessing = false;
 
 // A $( document ).ready() block.
@@ -498,22 +481,34 @@ $( document ).ready(function() {
 
     // Event Handlers, Button clicks, etc.
     $("#submit").click(function() {
+
+
         // Erase to show the next.
         try {
             if (!finalCheck(users)) {
                 throw "There's a username that's not found.";
             }
+
+            // Passed the check so show loading gif.
+            $("#loading").removeClass("img-hide");
+
             if (!stillProcessing) {
                 stillProcessing = true;
                 log(users, "orange");
                 getEachUserFollows(users, function(result) {
+                    // Hide loading gif since we got our data.
+                    $("#loading").addClass("img-hide");
+
+                    // Clean any passed submissions by emptying them.
                     $("#scrollable_result0").empty();
                     $("#scrollable_result1").empty();
 
                     opts = {users: users};
 
+                    // Inverse is checked, Find nonMatching.
                     if ($("#checkbox0").is(':checked')) {
                         updateNonMatching("#scrollable_result0", "#scrollable_result1", "#table0", "#table1", result, opts);
+                    // Just find matching.
                     } else {
                         updateMatching("#scrollable_result0", "#table0", result, opts)
                     }

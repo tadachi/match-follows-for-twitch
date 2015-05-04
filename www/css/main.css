@@ -48,6 +48,18 @@ label {
     border-color: red !important;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.img-hide {
+    display: none;
+}
+
+.img-show {
+    display: auto;
+}
+
 .valid {
     border-color: lawngreen !important;
 }
@@ -120,6 +132,12 @@ label {
     margin: auto;
     padding-top: 15px;
     display: none; /* By default hide this */
+}
+
+@media screen and (max-width:500px) {
+    .mobile-only {
+        visibility: hidden;
+    }
 }
 
 /************************ TABLET **************************/

@@ -42,10 +42,10 @@
     </head>
     
     <body>
-        <!--<nav class="navbar navbar-default" role="navigation">-->
-            <!--<div class="container-fluid col-md-6 col-md-offset-3">-->
-                <!--<div class="navbar-header">-->
-                    <!--<a class="navbar-brand" href="#">Match Follows for Twitch</a>-->
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid col-md-6 col-md-offset-3">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Match Follows for Twitch</a>
                     <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">-->
                         <!--<span class="sr-only">Toggle navigation</span>-->
                         <!--<span class="icon-bar"></span>-->
@@ -53,7 +53,7 @@
                         <!--<span class="icon-bar"></span>-->
                     <!--</button>-->
 
-                <!--</div>-->
+                </div>
                 <!--<div class="collapse navbar-collapse" id="navbarCollapse">-->
                     <!--<ul class="nav navbar-nav">-->
                         <!--<li><a class="navbar-brand" href='#'>Test0</a></li>-->
@@ -63,41 +63,41 @@
                         <!--<li><a class="navbar-brand" href='#'>Test4</a></li>-->
                     <!--</ul>-->
                 <!--</div>-->
-            <!--</div>-->
-        <!--</nav>&lt;!&ndash; /.navbar-collapse &ndash;&gt;-->
+            </div>
+        </nav><!-- /.navbar-collapse -->
 
 
-            <div class="container .page-wrapper"><!--Bootstrap full width container, spanning the entire width of your viewport.-->
-                <div class="jumbotron">
-                    <div class="row form">
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <label for="input0" class="red">1st</label>
-                                <input class="form-control" id="input0" type="text" placeholder="cosmowright">
-                                <label for="input0"><span id="output0"></span></label>
-                            </div>
-                            <div class="form-group">
-                                <label for="input0" class="blue">2nd</label>
-                                <input class="form-control" id="input1" type="text" placeholder="trihex">
-                                <label for="input1"><span id="output1"></span></label>
-                            </div>
-                            <button id="submit" type="button" class="btn btn-default">Submit</button>
-                                <label class="checkbox-inline no_indent"><input id="checkbox0" type="checkbox">Inverse</label>
-                            <div id="test" class="popbox" style="display: none"><p>test</p></div>
-                        </form>
+        <div class="container .page-wrapper"><!--Bootstrap full width container, spanning the entire width of your viewport.-->
+            <div class="jumbotron">
+                <div class="row form">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="input0" class="red">1st</label>
+                            <input class="form-control" id="input0" type="text" placeholder="cosmowright">
+                            <label for="input0"><span id="output0"></span></label>
+                        </div>
+                        <div class="form-group">
+                            <label for="input0" class="blue">2nd</label>
+                            <input class="form-control" id="input1" type="text" placeholder="trihex">
+                            <label for="input1"><span id="output1"></span></label>
+                        </div>
+                        <label class="checkbox-inline no_indent"><input id="checkbox0" type="checkbox">Inverse</label>
+                        <button id="submit" type="button" class="btn btn-default">Submit</button>
+                        <label><img id="loading" src="images/ajax-loader.gif" class="img-hide"></label>
+                    </form>
 
-                    </div>
+                </div>
 
-                </div><!-- /.jumbotron -->
-                <div class="jumbotron">
-                    <div class="row content">
-                            <div id="scrollable_result0">
-                            </div>
-                            <div id="scrollable_result1">
-                            </div>
-                    </div>
-                </div><!-- /.jumbotron -->
-            </div><!-- /.container -->
+            </div><!-- /.jumbotron -->
+            <div class="jumbotron">
+                <div class="row content">
+                        <div id="scrollable_result0">
+                        </div>
+                        <div id="scrollable_result1">
+                        </div>
+                </div>
+            </div><!-- /.jumbotron -->
+        </div><!-- /.container -->
 
 
     </body>
