@@ -1,14 +1,9 @@
 <!DOCTYPE html><!--HTML5 doctype-->
 <html>
     <head>
-		<!--
-		 * Copyright (c) 2013, Intel Corporation. All rights reserved.
-		 * Please see the included README.md file for license terms and conditions.
-		-->
         <script>
             (function() {
-                if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/)) 
-                {
+                if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/)) {
                     var msViewportStyle = document.createElement("style");
                     msViewportStyle.appendChild(document.createTextNode("@-ms-viewport{width:auto!important}"));
                     document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
@@ -22,7 +17,6 @@
         <link href="css/main.css" rel="stylesheet" type="text/css">
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
-        
         <!-- Libraries required to use Emulation, Debugging features of IntelXDK -->
         <!--Live Preview runs your app inside of a Chrome browser window on your desktop, it does not run on a real device. The files you see missing in the console log are indeed missing. They are supplied auto-magically when you use the Emulate, Test and Debug tabs and when you perform a build using the Build tab.-->
         <script src="http://debug-software.intel.com/target/target-script-min.js#yirWViNsaj-CReBeTlAKX39fRw-b6dCWc1gGqmBahG4"></script>
@@ -36,10 +30,12 @@
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <!-- Async -->
         <script src="js/async.min.js" type="text/javascript"></script>
-        <!-- Main Javascript Library -->
+        <!-- Main Javascript Libraries and Plugins -->
+        <script src="js/jquery.rest.min.js" type="text/javascript"></script>
+        <script src="js/ZeroClipboard.js" type="text/javascript" ></script>
         <script src="js/main.js" type="text/javascript"></script>
         <script src="js/match-followers-for-twitch.js" type="text/javascript"></script>
-        <script src="js/jquery.rest.min.js" type="text/javascript"></script>
+
     </head>
     
     <body>
@@ -74,12 +70,12 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <label for="input0" class="red">1st</label>
-                            <input class="form-control flash" id="input0" type="text" placeholder="e.g cosmowright">
+                            <input class="form-control run-flash" id="input0" type="text" placeholder="e.g cosmowright">
                             <label for="input0"><span id="output0"></span></label>
                         </div>
                         <div class="form-group">
                             <label for="input0" class="blue">2nd</label>
-                            <input class="form-control flash" id="input1" type="text" placeholder="e.g trihex">
+                            <input class="form-control run-flash" id="input1" type="text" placeholder="e.g trihex">
                             <label for="input1"><span id="output1"></span></label>
                         </div>
                         <label class="checkbox-inline no_indent"><input id="checkbox0" type="checkbox">Inverse</label>
@@ -88,7 +84,9 @@
                     </form>
                 </div>
             <div class="row" style="margin: 5px 5px 5px 5px; width: 100%;">
-                Share this link: <input type="text" name="country" value="ADASDASDASDASDSAADASDADSA" readonly>
+                <div id="calc-text-width"></div>
+                Share this link: <input id="copy-share-link" type="text" name="country" value="" readonly>
+                <button id="copy-button" data-clipboard-target="copy-share-link">Copy to Clipboard</button>
             </div>
 
             </div><!-- /.jumbotron -->

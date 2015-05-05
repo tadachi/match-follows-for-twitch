@@ -51,7 +51,11 @@ function getQueryStringParams() {
  * @param color
  */
 function log(msg, color){
-    console.log("%c" + msg, " color: " + color + ";font-weight: bold; background: #F0FFFF;");
+    if (msg === undefined) {
+        console.log("%c" + msg, " color: " + color + ";font-weight: bold; background: #F0FFFF;");
+    } else {
+
+    }
 }
 
 /**
@@ -145,7 +149,6 @@ function doneTyping(dom_id, name, opts) {
                 opts["users"][opts["id"]] = name;
             }
         } else {
-            console.log(opts["user"]);
             $(dom_id).addClass("error");
             if (opts["users"] && opts["id"]) {
                 // Set it to null so that other functions know not to proceed.
@@ -226,7 +229,6 @@ function getEachUserFollows(names, callback) {
         asyncTasks.push(
             function(callback) {
                 getAllFollowedStreams(name, opts, function(result) {
-                    console.log(result);
                     callback(null, result);
                 });
             }
@@ -269,7 +271,6 @@ function findMatchFollowers(input) {
             }
         }
     }
-    log(result, "orange");
     return result;
 }
 
@@ -487,20 +488,32 @@ function hideLoadingImage(dom_id) {
  * @param users
  * @returns {boolean}
  */
-function finalCheck(s) {
-    $('#input0').blur(function() {
-        if( $(this).val().length === 0 ) {
-            //$(this).addClass("error");
-            return false;
-        }
-    });
+function finalCheck() {
+    var incompleteForm = false;
 
-    $('#input1').blur(function() {
-        if( $(this).val().length === 0 ) {
-            //$(this).addClass("error");
-            return false;
-        }
-    });
+    if( $("#input0").val().length === 0 ) {
+        $("#input0").addClass("error");
+        incompleteForm = true;
+    } else {
+        $("#input0").removeClass("error");
+    }
+
+    if( $("#input1").val().length === 0 ) {
+        $("#input1").addClass("error");
+
+        $("#input1").addClass("run-flash");
+        incompleteForm = true;
+    } else {
+        $("#input1").removeClass("error");
+    }
+
+    if (incompleteForm) {
+        return false;
+    }
+
+    if (users.length <= 1) {
+        return false;
+    }
 
     for (i = 0; i < users.length; i++) {
         if (!users[i]) {
@@ -517,14 +530,35 @@ var users = [];
 // Semaphore for preventing more than one submission at at time.
 var stillProcessing = false;
 
+
+
 // A $( document ).ready() block.
 $( document ).ready(function() {
     console.log( "Document is ready!" );
+
+    // Setup text in copy-share-link.
+    $("#calc-text-width").val(window.location.href);
+    $("#copy-share-link").val(window.location.href);
+    dom = $("#calc-text-width");
+
+    var val = dom.text().length;
+
+    console.log(dom.val());
+    console.log(dom.val().length);
+
+    $("#copy-share-link").attr("size", (dom.val().length - 8));
+
+    // ZeroClipBoard initlize, one-liner.
+    var zeroClipBoardClient = new ZeroClipboard($("#copy-button"));
+
+    // Setup verification in input boxes.
     opts = {"offset":0, "direction":"ASC", "limit":1000};
     
     // function(){func(args)} syntax to prevent executing function after passing it in as an argument
     verify("#input0", "#input0", function(){doneTyping("#input0", $("#input0").val(), {"users":users, "id":"0"})}, 400, {"users":users, "id":"0"});
     verify("#input1", "#input1", function(){doneTyping("#input1", $("#input1").val(), {"users":users, "id":"1"})}, 400, {"users":users, "id":"1"});
+
+
 
     // Use stuff from params or do a example run with default twitch usernames;
     if (params.a && params.b) {
@@ -554,13 +588,13 @@ $( document ).ready(function() {
 
         run();
     } else {
-        //// Default users;
+        // Default users;
         //users[0] = "cosmowright";
         //users[1] = "trihex";
-        //
+
+        // Default run.
         //run();
     }
-
 
     // Event Handlers, Button clicks, etc.
     $("#submit").click(function() {
