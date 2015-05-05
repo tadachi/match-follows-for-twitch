@@ -1,4 +1,20 @@
-Match Follow for Twitch.
+#Match Follows for Twitch.
 =========================================================
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+## Description
+
+An app that can find follows that two twitch users share.
+
+It can also find the follows that one person has but the other doesn't and vice versa.
+
+## IDEs used:
+
+Intel XDK
+Intellij Webstorm
+
+## Tested on
+
+Chrome, Internet Explorer 10.
+Google Nexus 6
+Google Nexus 7
+Google Nexus 4

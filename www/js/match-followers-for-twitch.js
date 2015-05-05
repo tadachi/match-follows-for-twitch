@@ -21,6 +21,30 @@ if (!String.prototype.format) {
 }
 
 /**
+ * Parses the URL for querystring params.
+ * Example usage:
+ * url = "http://dummy.com/?technology=jquery&blog=jquerybyexample".
+ * var tech = getQueryStringParams("technology"); //outputs: "jquery"
+ * var blog = getQueryStringParams("blog");       //outputs: "jquerybyexample"
+ *
+ * @param sParam
+ * @returns {*}
+ */
+// Read a page's GET URL variables and return them as an associative array.
+function getQueryStringParams() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
+
+/**
  * Logging with colors.
  * log("Hows life?", "green"); // Will be green
  * @param msg
@@ -108,7 +132,6 @@ function userExists(name, callback) {
  * @param opts
  */
 function doneTyping(dom_id, name, opts) {
-    log(name, "orange");
     var id = null;
     
     // Progress or checking.
@@ -122,6 +145,7 @@ function doneTyping(dom_id, name, opts) {
                 opts["users"][opts["id"]] = name;
             }
         } else {
+            console.log(opts["user"]);
             $(dom_id).addClass("error");
             if (opts["users"] && opts["id"]) {
                 // Set it to null so that other functions know not to proceed.
@@ -169,6 +193,7 @@ function verify(input_dom_id, output_dom_id, funcObj, doneTypingInterval, opts) 
         // If input is empty just set text to an empty string or remove classes.
         if( $(input_dom_id).val().length <= 1 ) { // Account for an empty character.
             if (opts["users"] && opts["id"]) { opts["users"][opts["id"]] = null; }
+            $(input_dom_id).empty();
             $(output_dom_id).empty();
             $(output_dom_id).removeClass("error");
             $(output_dom_id).removeClass("valid");
@@ -315,21 +340,6 @@ function sortByName(listOfFollows) {
 }
 
 /**
- * A final check to see if there are any nulls in the userlist to be processed.
- *
- * @param users
- * @returns {boolean}
- */
-function finalCheck(users) {
-    for (i = 0; i < users.length; i++) {
-        if (!users[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
-/**
  * Append a list of follows of the 1st person has that 2nd person doesn't have and vice versa.
  *
  * @param dom_id0
@@ -453,19 +463,56 @@ function process(table_id, list) {
     return html;
 }
 
+
+/**
+ * Show loading image gif.
+ * @param dom_id
+ */
 function showLoadingImage(dom_id) {
     var html = "<div id=\"loading-image\"><img src=\"path/to/loading.gif\" alt=\"Loading...\" /></div>"
     $(dom_id).append(html);
 }
 
+/**
+ * Hide loading image gif.
+ * @param dom_id
+ */
 function hideLoadingImage(dom_id) {
     $(dom_id).remove();
 }
 
+/**
+ * A final check to see if there are any nulls in the userlist to be processed.
+ *
+ * @param users
+ * @returns {boolean}
+ */
+function finalCheck(s) {
+    $('#input0').blur(function() {
+        if( $(this).val().length === 0 ) {
+            //$(this).addClass("error");
+            return false;
+        }
+    });
+
+    $('#input1').blur(function() {
+        if( $(this).val().length === 0 ) {
+            //$(this).addClass("error");
+            return false;
+        }
+    });
+
+    for (i = 0; i < users.length; i++) {
+        if (!users[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 // Globals
+var params = getQueryStringParams();
 var users = [];
-users[0] = "cosmowright";
-users[1] = "trihex";
 
 // Semaphore for preventing more than one submission at at time.
 var stillProcessing = false;
@@ -479,49 +526,45 @@ $( document ).ready(function() {
     verify("#input0", "#input0", function(){doneTyping("#input0", $("#input0").val(), {"users":users, "id":"0"})}, 400, {"users":users, "id":"0"});
     verify("#input1", "#input1", function(){doneTyping("#input1", $("#input1").val(), {"users":users, "id":"1"})}, 400, {"users":users, "id":"1"});
 
+    // Use stuff from params or do a example run with default twitch usernames;
+    if (params.a && params.b) {
+        users[0] = params.a;
+        users[1] = params.b;
+
+        // Set input boxes text to the user naems in params.
+        $("#input0").val(params.a);
+        $("#input1").val(params.b);
+
+        // Validate and show user validation resutls.
+        userExists(params.a, function(result) {
+            if (result) { //True
+                $("#input0").addClass("valid");
+            } else {
+                $("#input0").addClass("error");
+            }
+        });
+
+        userExists(params.b, function(result) {
+            if (result) { //True
+                $("#input1").addClass("valid");
+            } else {
+                $("#input1").addClass("error");
+            }
+        });
+
+        run();
+    } else {
+        //// Default users;
+        //users[0] = "cosmowright";
+        //users[1] = "trihex";
+        //
+        //run();
+    }
+
+
     // Event Handlers, Button clicks, etc.
     $("#submit").click(function() {
-
-
-        // Erase to show the next.
-        try {
-            if (!finalCheck(users)) {
-                throw "There's a username that's not found.";
-            }
-
-            // Passed the check so show loading gif.
-            $("#loading").removeClass("img-hide");
-
-            if (!stillProcessing) {
-                stillProcessing = true;
-                log(users, "orange");
-                getEachUserFollows(users, function(result) {
-                    // Hide loading gif since we got our data.
-                    $("#loading").addClass("img-hide");
-
-                    // Clean any passed submissions by emptying them.
-                    $("#scrollable_result0").empty();
-                    $("#scrollable_result1").empty();
-
-                    opts = {users: users};
-
-                    // Inverse is checked, Find nonMatching.
-                    if ($("#checkbox0").is(':checked')) {
-                        updateNonMatching("#scrollable_result0", "#scrollable_result1", "#table0", "#table1", result, opts);
-                    // Just find matching.
-                    } else {
-                        updateMatching("#scrollable_result0", "#table0", result, opts)
-                    }
-                });                
-            } else {
-                throw "Cannot process request since there is already one in progress."
-            }               
-        } catch (err) {
-            log(err, "red");
-        } finally {
-            // Finished processing.
-            stillProcessing = false;
-        }
+        run();
     });
 
     // Test.
@@ -548,3 +591,44 @@ $( document ).ready(function() {
 //    });
 
 });
+
+function run() {
+    // Erase to show the next.
+    try {
+        if (!finalCheck()) {
+            throw "There's a username that's not found.";
+        }
+
+        // Passed the check so show loading gif.
+        $("#loading").removeClass("img-hide");
+
+        if (!stillProcessing) {
+            stillProcessing = true;
+            getEachUserFollows(users, function(result) {
+                // Hide loading gif since we got our data.
+                $("#loading").addClass("img-hide");
+
+                // Clean any passed submissions by emptying them.
+                $("#scrollable_result0").empty();
+                $("#scrollable_result1").empty();
+
+                opts = {users: users};
+
+                // Inverse is checked, Find nonMatching.
+                if ($("#checkbox0").is(':checked')) {
+                    updateNonMatching("#scrollable_result0", "#scrollable_result1", "#table0", "#table1", result, opts);
+                    // Just find matching.
+                } else {
+                    updateMatching("#scrollable_result0", "#table0", result, opts)
+                }
+            });
+        } else {
+            throw "Cannot process request since there is already one in progress."
+        }
+    } catch (err) {
+        log(err, "red");
+    } finally {
+        // Finished processing.
+        stillProcessing = false;
+    }
+}
