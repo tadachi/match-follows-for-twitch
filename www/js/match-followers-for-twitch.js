@@ -120,12 +120,6 @@ function userExists(name, callback) {
     });
 }
 
-
-
-// User is "finished typing," do something
-// Pass an object with key/values
-// Pass this to verify as a first class citizen to a verify function.
-
 /**
  * Pass an object with key/values
  * Pass this to verify as a first class citizen to a verify function.
@@ -157,8 +151,6 @@ function doneTyping(dom_id, name, opts) {
         }
     });
 }
-
-
 
 /**
  * Does the legwork of verifying a user.
@@ -464,24 +456,6 @@ function process(table_id, list) {
     return html;
 }
 
-
-/**
- * Show loading image gif.
- * @param dom_id
- */
-function showLoadingImage(dom_id) {
-    var html = "<div id=\"loading-image\"><img src=\"path/to/loading.gif\" alt=\"Loading...\" /></div>"
-    $(dom_id).append(html);
-}
-
-/**
- * Hide loading image gif.
- * @param dom_id
- */
-function hideLoadingImage(dom_id) {
-    $(dom_id).remove();
-}
-
 /**
  * A final check to see if there are any nulls in the userlist to be processed.
  *
@@ -530,23 +504,21 @@ var users = [];
 // Semaphore for preventing more than one submission at at time.
 var stillProcessing = false;
 
-
-
 // A $( document ).ready() block.
 $( document ).ready(function() {
     console.log( "Document is ready!" );
 
-    // Setup text in copy-share-link.
+    // Setup text in copy-share-link and set its size.
     $("#calc-text-width").val(window.location.href);
     $("#copy-share-link").val(window.location.href);
-    dom = $("#calc-text-width");
-
-    var val = dom.text().length;
-
-    console.log(dom.val());
-    console.log(dom.val().length);
-
-    $("#copy-share-link").attr("size", (dom.val().length - 8));
+    //dom = $("#calc-text-width");
+    //
+    //var val = dom.text().length;
+    //
+    //console.log(dom.val());
+    //console.log(dom.val().length);
+    //
+    //$("#copy-share-link").attr("size", 8(dom.val().length - ));
 
     // ZeroClipBoard initlize, one-liner.
     var zeroClipBoardClient = new ZeroClipboard($("#copy-button"));
@@ -557,8 +529,6 @@ $( document ).ready(function() {
     // function(){func(args)} syntax to prevent executing function after passing it in as an argument
     verify("#input0", "#input0", function(){doneTyping("#input0", $("#input0").val(), {"users":users, "id":"0"})}, 400, {"users":users, "id":"0"});
     verify("#input1", "#input1", function(){doneTyping("#input1", $("#input1").val(), {"users":users, "id":"1"})}, 400, {"users":users, "id":"1"});
-
-
 
     // Use stuff from params or do a example run with default twitch usernames;
     if (params.a && params.b) {
@@ -597,6 +567,10 @@ $( document ).ready(function() {
     }
 
     // Event Handlers, Button clicks, etc.
+    $("#copy-button").click(function() {
+        $(this).text("Copied!");
+    });
+
     $("#submit").click(function() {
         run();
     });

@@ -1,20 +1,28 @@
-#Match Follows for Twitch.
+##Match Follows for Twitch.
 =========================================================
+### Description
+Have you ever asked yourself if this person you are watching share some of the same follows you do?
 
-## Description
+How about who they follow and you don't?
 
-An app that can find follows that two twitch users share.
+This is an app can answer those questions.
 
-It can also find the follows that one person has but the other doesn't and vice versa.
+It can find follows that two twitch users share.
 
-## IDEs used:
+And It can also find the follows that one person has but the other doesn't and vice versa.
 
-Intel XDK
-Intellij Webstorm
+### Screenshots
+[Screenshot 01](https://raw.githubusercontent.com/tadachi/match-follows-for-twitch/master/screenshot01.png)
 
-## Tested on
+[Screenshot 02](https://raw.githubusercontent.com/tadachi/match-follows-for-twitch/master/screenshot02.png)
 
-Chrome, Internet Explorer 10.
-Google Nexus 6
-Google Nexus 7
-Google Nexus 4
+### Tested on
+* Chrome, Internet Explorer 10.
+* Google Nexus 6
+* Google Nexus 7
+* Google Nexus 4
+
+### IDEs Used to make this App.
+
+* Intel XDK for emulating phones and screen sizes and building for Android.
+* IntelliJ Webstorm for its amazing features and familiarity.

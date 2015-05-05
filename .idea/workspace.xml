@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3f6cee04-f762-48ff-8dd6-98b8e2382c3f" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/index.html" afterPath="$PROJECT_DIR$/www/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/css/main.css" afterPath="$PROJECT_DIR$/www/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/match-followers-for-twitch.js" afterPath="$PROJECT_DIR$/www/js/match-followers-for-twitch.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="match-follows-for-twitch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -55,8 +54,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-28.965517" vertical-offset="900" max-vertical-offset="2220">
-              <caret line="87" column="95" selection-start-line="87" selection-start-column="95" selection-end-line="87" selection-end-column="95" />
+            <state vertical-scroll-proportion="-30.344828" vertical-offset="0" max-vertical-offset="2140">
+              <caret line="44" column="26" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -64,11 +63,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="match-followers-for-twitch.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="match-followers-for-twitch.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/match-followers-for-twitch.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4319809" vertical-offset="8824" max-vertical-offset="11458">
-              <caret line="551" column="67" selection-start-line="551" selection-start-column="67" selection-end-line="551" selection-end-column="67" />
+            <state vertical-scroll-proportion="-300.72415" vertical-offset="0" max-vertical-offset="11016">
+              <caret line="513" column="34" selection-start-line="513" selection-start-column="34" selection-end-line="513" selection-end-column="34" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -76,14 +75,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.066667" vertical-offset="0" max-vertical-offset="425">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.11906615" vertical-offset="0" max-vertical-offset="1285">
+              <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -113,9 +112,9 @@
         <option value="$PROJECT_DIR$/LICENSE.md" />
         <option value="$PROJECT_DIR$/www/js/main2.js" />
         <option value="$PROJECT_DIR$/www/css/main.css" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/www/js/match-followers-for-twitch.js" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -504,6 +503,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/LICENSE.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.1333333" vertical-offset="0" max-vertical-offset="459">
+          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/www/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1071">
@@ -520,32 +530,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LICENSE.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.1333333" vertical-offset="0" max-vertical-offset="459">
-          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.066667" vertical-offset="0" max-vertical-offset="425">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-28.965517" vertical-offset="900" max-vertical-offset="2220">
-          <caret line="87" column="95" selection-start-line="87" selection-start-column="95" selection-end-line="87" selection-end-column="95" />
+        <state vertical-scroll-proportion="-30.344828" vertical-offset="0" max-vertical-offset="2140">
+          <caret line="44" column="26" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
           <folding>
             <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
@@ -554,11 +542,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/match-followers-for-twitch.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4319809" vertical-offset="8824" max-vertical-offset="11458">
-          <caret line="551" column="67" selection-start-line="551" selection-start-column="67" selection-end-line="551" selection-end-column="67" />
+        <state vertical-scroll-proportion="-300.72415" vertical-offset="0" max-vertical-offset="11016">
+          <caret line="513" column="34" selection-start-line="513" selection-start-column="34" selection-end-line="513" selection-end-column="34" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11906615" vertical-offset="0" max-vertical-offset="1285">
+          <caret line="9" column="2" selection-start-line="9" selection-start-column="2" selection-end-line="9" selection-end-column="2" />
+          <folding />
         </state>
       </provider>
     </entry>
