@@ -456,6 +456,33 @@ function process(table_id, list) {
     return html;
 }
 
+function addURLParameter(url, param, value){
+    var hash       = {};
+    var parser     = document.createElement("a");
+
+    parser.href    = url;
+
+    var parameters = parser.search.split(/\?|&/);
+
+    for(var i = 0; i < parameters.length; i++) {
+        if(!parameters[i])
+            continue;
+
+        var ary      = parameters[i].split("=");
+        hash[ary[0]] = ary[1];
+    }
+
+    hash[param] = value;
+
+    var list = [];
+    Object.keys(hash).forEach(function (key) {
+        list.push(key + "=" + hash[key]);
+    });
+
+    parser.search = "?" + list.join('&');
+    return parser.href;
+}
+
 /**
  * A final check to see if there are any nulls in the userlist to be processed.
  *
@@ -511,14 +538,6 @@ $( document ).ready(function() {
     // Setup text in copy-share-link and set its size.
     $("#calc-text-width").val(window.location.href);
     $("#copy-share-link").val(window.location.href);
-    //dom = $("#calc-text-width");
-    //
-    //var val = dom.text().length;
-    //
-    //console.log(dom.val());
-    //console.log(dom.val().length);
-    //
-    //$("#copy-share-link").attr("size", 8(dom.val().length - ));
 
     // ZeroClipBoard initlize, one-liner.
     var zeroClipBoardClient = new ZeroClipboard($("#copy-button"));
@@ -572,6 +591,12 @@ $( document ).ready(function() {
     });
 
     $("#submit").click(function() {
+        var url = location.href;
+        url = addURLParameter(url, "a", users[0]);
+        url = addURLParameter(url, "b", users[1]);
+
+        $("#copy-share-link").val(url);
+
         run();
     });
 
