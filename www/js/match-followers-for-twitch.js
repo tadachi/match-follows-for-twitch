@@ -449,7 +449,7 @@ function process(table_id, list) {
         html += "<td class=\"vert-align\">" + "<img class=\"{class}\" height=\"50\" width=\"50\" src=\"{src}\" onerror=\"this.src='{default}'\""
                     .format({src: list[i].logo, class: "img-responsive img-border to-center img-rounded",
                     default: "http://s.jtvnw.net/jtv_user_pictures/hosted_images/GlitchIcon_WhiteonPurple.png"}) + "</td>";
-        html += "<td class=\"vert-align\">" + "<a href=\"{url}\">{value}</a>".format({url: list[i].url, value: list[i].name}) + "</td>";
+        html += "<td class=\"vert-align\">" + "<a href=\"{url}\" target=\"_blank\">{value}</a>".format({url: list[i].url, value: list[i].name}) + "</td>";
         //html += "<td class=\"vert-align\">" + list[i].game + "</td>";
         html += "<td class=\"vert-align\">" + list[i].followers + "</td>";
         html += "</tr>";
