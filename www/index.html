@@ -19,10 +19,11 @@
 
         <!-- Libraries required to use Emulation, Debugging features of IntelXDK -->
         <!--Live Preview runs your app inside of a Chrome browser window on your desktop, it does not run on a real device. The files you see missing in the console log are indeed missing. They are supplied auto-magically when you use the Emulate, Test and Debug tabs and when you perform a build using the Build tab.-->
-        <script src="http://debug-software.intel.com/target/target-script-min.js#yirWViNsaj-CReBeTlAKX39fRw-b6dCWc1gGqmBahG4"></script>
-        <script src="intelxdk.js"></script>
-        <script src='cordova.js'></script> 
-        <script src='xhr.js'></script>
+        <!--<script src="http://debug-software.intel.com/target/target-script-min.js#yirWViNsaj-CReBeTlAKX39fRw-b6dCWc1gGqmBahG4"></script>-->
+        <!--<script src="intelxdk.js"></script>-->
+        <!--<script src='cordova.js'></script> -->
+        <!--<script src='xhr.js'></script>-->
+        <!--<script src="js/main.js" type="text/javascript"></script>-->
         <!-- JQuery -->
         <script src="js/jquery.min.js" type="text/javascript"></script>
         <script src="js/jquery.tablesorter.min.js" type="text/javascript"></script>
@@ -33,7 +34,6 @@
         <!-- Main Javascript Libraries and Plugins -->
         <script src="js/jquery.rest.min.js" type="text/javascript"></script>
         <script src="js/ZeroClipboard.js" type="text/javascript" ></script>
-        <script src="js/main.js" type="text/javascript"></script>
         <script src="js/match-followers-for-twitch.js" type="text/javascript"></script>
 
     </head>
@@ -81,8 +81,8 @@
                 </div>
             <div class="row" style="margin: 5px 5px 5px 5px; width: 100%;">
                 <div id="calc-text-width"></div>
-                Share this link: <input id="copy-share-link" type="text" name="country" value="" disabled="disabled" readonly>
-                <button id="copy-button" data-clipboard-target="copy-share-link">Copy to Clipboard</button>
+                <input id="copy-share-link" type="text" name="country" value="" disabled="disabled" readonly class="desktop-only" size="50">
+                <button id="copy-button" data-clipboard-target="copy-share-link" class="desktop-only">Copy to Clipboard.</button>
             </div>
 
             </div><!-- /.jumbotron -->

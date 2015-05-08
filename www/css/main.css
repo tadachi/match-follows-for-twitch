@@ -1,12 +1,11 @@
 /******************GLOBAL**************************/
-@-ms-viewport {
-    width: device-width;
-}
-
 html, body{
     font-size: 0;
     padding: 0;
     margin: 0;
+
+    height: 100%;
+    overflow-x: hidden; /* Allows the user to scroll vertically but not horizontally */
 
 	/*width:100%;*/
 	/*overflow-x:hidden;*/
@@ -170,8 +169,8 @@ label {
     display: none; /* By default hide this */
 }
 
-@media screen and (max-width:500px) {
-    .mobile-only {
+@media screen and (max-width:1279px) {
+    .desktop-only {
         visibility: hidden;
     }
 }

@@ -417,6 +417,13 @@ function updateMatching(dom_id, table_id, list, opts) {
     $(table_id).tablesorter();
 }
 
+/**
+ * Process twitch json data into a clean html table.
+ *
+ * @param table_id
+ * @param list
+ * @returns {string}
+ */
 function process(table_id, list) {
     var html = "";
 
@@ -456,6 +463,14 @@ function process(table_id, list) {
     return html;
 }
 
+/**
+ * Adds params to the URL.
+ *
+ * @param url
+ * @param param
+ * @param value
+ * @returns {string|*}
+ */
 function addURLParameter(url, param, value){
     var hash       = {};
     var parser     = document.createElement("a");
@@ -528,12 +543,14 @@ function finalCheck() {
 var params = getQueryStringParams();
 var users = [];
 
-// Semaphore for preventing more than one submission at at time.
-var stillProcessing = false;
+
 
 // A $( document ).ready() block.
 $( document ).ready(function() {
     console.log( "Document is ready!" );
+
+    // Semaphore for preventing more than one submission at at time.
+    var stillProcessing = false;
 
     // Setup text in copy-share-link and set its size.
     $("#calc-text-width").val(window.location.href);
@@ -543,7 +560,7 @@ $( document ).ready(function() {
     var zeroClipBoardClient = new ZeroClipboard($("#copy-button"));
 
     // Setup verification in input boxes.
-    opts = {"offset":0, "direction":"ASC", "limit":1000};
+    var opts = {"offset":0, "direction":"ASC", "limit":1000};
     
     // function(){func(args)} syntax to prevent executing function after passing it in as an argument
     verify("#input0", "#input0", function(){doneTyping("#input0", $("#input0").val(), {"users":users, "id":"0"})}, 400, {"users":users, "id":"0"});
@@ -575,7 +592,7 @@ $( document ).ready(function() {
             }
         });
 
-        run();
+        run(opts);
     } else {
         // Default users;
         //users[0] = "cosmowright";
@@ -591,13 +608,16 @@ $( document ).ready(function() {
     });
 
     $("#submit").click(function() {
-        var url = location.href;
-        url = addURLParameter(url, "a", users[0]);
-        url = addURLParameter(url, "b", users[1]);
+        if (finalCheck()) {
+            var url = location.href;
+            url = addURLParameter(url, "a", users[0]);
+            url = addURLParameter(url, "b", users[1]);
 
-        $("#copy-share-link").val(url);
+            $("#copy-share-link").val(url);
+            $("#copy-share-link").text("Copy to Clipboard");
 
-        run();
+            run();
+        }
     });
 
     // Test.
@@ -623,11 +643,8 @@ $( document ).ready(function() {
 //        console.log(result);
 //    });
 
-});
-
-function run() {
-    // Erase to show the next.
-    try {
+    function run(runOpts) {
+        // Erase to show the next.
         if (!finalCheck()) {
             throw "There's a username that's not found.";
         }
@@ -645,7 +662,7 @@ function run() {
                 $("#scrollable_result0").empty();
                 $("#scrollable_result1").empty();
 
-                opts = {users: users};
+                var opts = {users: users};
 
                 // Inverse is checked, Find nonMatching.
                 if ($("#checkbox0").is(':checked')) {
@@ -654,14 +671,17 @@ function run() {
                 } else {
                     updateMatching("#scrollable_result0", "#table0", result, opts)
                 }
+
+                //Finished.
+                stillProcessing = false;
             });
         } else {
-            throw "Cannot process request since there is already one in progress."
+            log("Cannot process request since there is already one in progress.", "red");
         }
-    } catch (err) {
-        log(err, "red");
-    } finally {
-        // Finished processing.
-        stillProcessing = false;
+
     }
-}
+
+});
+
+
+
