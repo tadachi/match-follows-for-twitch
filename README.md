@@ -12,6 +12,8 @@ It can find follows that two twitch users share.
 
 And It can also find the follows that one person has but the other doesn't and vice versa.
 
+Discover more streams to follow based on the streamers YOU follow!
+
 #### Screenshots
 [Screenshot 01](https://raw.githubusercontent.com/tadachi/match-follows-for-twitch/master/screenshot01.png)
 
