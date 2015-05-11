@@ -165,14 +165,26 @@ function doneTyping(dom_id, name, opts) {
  */
 function verify(input_dom_id, output_dom_id, funcObj, doneTypingInterval, opts) {
     var typingTimer;
-    
+
+    // Race condition with submit. disable button?
+    $(input_dom_id).on('paste', function () {
+        var element = $(input_dom_id);
+        $(output_dom_id).removeClass("error");
+        $(output_dom_id).removeClass("valid");
+        //console.log(element.val());
+        setTimeout(function () {
+            console.log(element.val() + " pasted.");
+            proceed();
+        }, 5);
+    });
+
     // On keyup, start the countdown. Ideally, this happens when the user finishes typing in the user name.
     $(input_dom_id).keyup(function(){
         // Clear timer again. 
         clearTimeout(typingTimer);
         proceed();
     });
-    
+
     // On keydown, keep clearing the countdown.
     $(input_dom_id).keydown(function(e){
         var code = e.keyCode || e.which;
@@ -194,7 +206,9 @@ function verify(input_dom_id, output_dom_id, funcObj, doneTypingInterval, opts) 
             $(output_dom_id).removeClass("valid");
         }// else still checking so..
     });
-    
+
+
+
     function proceed() {
         // Requres function() { funcObj() } for setTimeout to execute interval expires.
         if( $(input_dom_id).val().length > 0 ) {
@@ -523,6 +537,14 @@ function finalCheck() {
         $("#input1").removeClass("error");
     }
 
+    if (!$("#input0").hasClass("valid")) {
+        incompleteForm = true;
+    }
+
+    if (!$("#input1").hasClass("valid")) {
+        incompleteForm = true;
+    }
+
     if (incompleteForm) {
         return false;
     }
@@ -643,7 +665,7 @@ $( document ).ready(function() {
 //        console.log(result);
 //    });
 
-    function run(runOpts) {
+    function run() {
         // Erase to show the next.
         if (!finalCheck()) {
             throw "There's a username that's not found.";
@@ -654,7 +676,10 @@ $( document ).ready(function() {
 
         if (!stillProcessing) {
             stillProcessing = true;
+            console.log(users[0] + " " + users[1] + " submitted.");
             getEachUserFollows(users, function(result) {
+
+
                 // Hide loading gif since we got our data.
                 $("#loading").addClass("img-hide");
 
