@@ -565,8 +565,6 @@ function finalCheck() {
 var params = getQueryStringParams();
 var users = [];
 
-
-
 // A $( document ).ready() block.
 $( document ).ready(function() {
     console.log( "Document is ready!" );
@@ -612,9 +610,10 @@ $( document ).ready(function() {
             } else {
                 $("#input1").addClass("error");
             }
+            run();
         });
 
-        run(opts);
+
     } else {
         // Default users;
         //users[0] = "cosmowright";
