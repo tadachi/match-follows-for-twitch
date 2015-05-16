@@ -667,7 +667,8 @@ $( document ).ready(function() {
     function run() {
         // Erase to show the next.
         if (!finalCheck()) {
-            throw "There's a username that's not found.";
+            console.log("There's a username that's not found.");
+            return;
         }
 
         // Passed the check so show loading gif.
