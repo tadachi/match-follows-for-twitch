@@ -406,15 +406,13 @@ function updateMatching(dom_id, table_id, list, opts) {
     // Our data.
     var matchedFollows = findMatchFollowers(list).sort(); // Sorted. //this.name, this.game, this.followers,
 
-    //console.log(matchedFollows.length);
 
     // They share one or more follows.
-
     user1 = "<span class=\"{class}\">{user1}</span>".format({user1: opts["users"][0], class: "red"})
     user2 = "<span class=\"{class}\">{user2}</span>".format({user2: opts["users"][1], class: "blue"})
     if (opts["users"][0] && opts["users"][1] && matchedFollows.length > 0) {
         html += "<p>{user1} and {user2} share these follows ({count})</p>".format({user1: user1, user2: user2 , count: matchedFollows.length});
-        // Process
+        // Process.
         html += process(table_id, matchedFollows);
     // They do not share follows.
     } else if (opts["users"][0] && opts["users"][1] && matchedFollows.length <= 0) {
@@ -455,6 +453,8 @@ function process(table_id, list) {
     html += "</tr>";
     html += "</thead>";
     html += "<tbody>";
+
+    console.log(list);
 
     for ( i = 0; i < list.length; i++ ) {
         id = table_id + "-" + i;
@@ -576,7 +576,7 @@ $( document ).ready(function() {
     $("#calc-text-width").val(window.location.href);
     $("#copy-share-link").val(window.location.href);
 
-    // ZeroClipBoard initlize, one-liner.
+    // ZeroClipBoard initialize, one-liner.
     var zeroClipBoardClient = new ZeroClipboard($("#copy-button"));
 
     // Setup verification in input boxes.
@@ -586,10 +586,14 @@ $( document ).ready(function() {
     verify("#input0", "#input0", function(){doneTyping("#input0", $("#input0").val(), {"users":users, "id":"0"})}, 400, {"users":users, "id":"0"});
     verify("#input1", "#input1", function(){doneTyping("#input1", $("#input1").val(), {"users":users, "id":"1"})}, 400, {"users":users, "id":"1"});
 
+    console.log(users);
+
     // Use stuff from params or do a example run with default twitch usernames;
     if (params.a && params.b) {
         users[0] = params.a;
         users[1] = params.b;
+
+        console.log(users);
 
         // Set input boxes text to the user naems in params.
         $("#input0").val(params.a);
@@ -679,6 +683,7 @@ $( document ).ready(function() {
             console.log(users[0] + " " + users[1] + " submitted.");
             getEachUserFollows(users, function(result) {
 
+                console.log(result);
 
                 // Hide loading gif since we got our data.
                 $("#loading").addClass("img-hide");
